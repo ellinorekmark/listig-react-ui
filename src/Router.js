@@ -6,7 +6,7 @@ import NewList from './pages/NewList';
 
 const Home = lazy(() => import('./pages/Home'));
 const Overview = lazy(() => import('./pages/Overview'));
-const List = lazy(() => import('./pages/List'));
+const ListView = lazy(() => import('./pages/ViewList'));
 const Profile = lazy(() => import('./pages/Profile'));
 
 
@@ -18,7 +18,7 @@ const AppRouter = () => (
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/overview" element={<Overview />} />
-        <Route path="/list/:id" element={<List />} />
+        <Route path="/list/:id" element={<ListView />} />
         <Route path="/newList" element={<NewList />} />
         <Route path="/profile" element={<Profile/>} />
         <Route path="*" element={() => <div>404 Not Found</div>} />

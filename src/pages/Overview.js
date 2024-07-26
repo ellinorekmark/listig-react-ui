@@ -34,10 +34,8 @@ export default function InteractiveList() {
               sx={{ cursor: 'pointer',
                 border: '1px solid ',
                 margin: '5px',
-                borderRadius: '5px' 
-               }} 
-              
-            >
+                borderRadius: '5px' ,
+               }} >
               <ListItemAvatar>
                 <Avatar>
                   <ListAltIcon />
