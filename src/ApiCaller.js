@@ -1,7 +1,12 @@
+import {useContext} from "react";
+import {AuthContext} from "./AuthContext";
+
+
+
 
 
 export class ApiCaller {
-    userStore = useUserStore()
+
 
     //baseUrl = "/api/"
     baseUrl = "http://localhost:8080/api/"
@@ -11,14 +16,13 @@ export class ApiCaller {
     }
 
 
-
-    async sendPost(path, data) {
+    async sendPost(path, data, loginDetails) {
       console.log(JSON.stringify(data))
       const response = await fetch(this.baseUrl + path, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa(this.userStore.loginDetails())
+          'Authorization': 'Basic ' + loginDetails
         },
         body: JSON.stringify(data)
       })
@@ -32,25 +36,27 @@ export class ApiCaller {
       return result
     }
 
-    async sendGet(path) {
+    async sendGet(path, loginDetails) {
       const response = await fetch(this.baseUrl + path, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa(this.userStore.loginDetails())
+          'Authorization': 'Basic ' + loginDetails
         }
       })
       if (!response.ok) {
         throw new Error(await response.json())
       }
-      return await response.json()
+      let res = await response.json();
+      console.log(res)
+      return res
     }
-    async  sendDelete(path, data){
+    async  sendDelete(path, data, loginDetails){
       const response = await fetch(this.baseUrl + path, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa(this.userStore.loginDetails())
+          'Authorization': 'Basic ' + loginDetails
         },
         body: JSON.stringify(data)
       })
@@ -61,9 +67,4 @@ export class ApiCaller {
     }
 
 
-
-
-    loginDetails(){
-        return userStore.username+":"+userStore.password;
-    }
   }

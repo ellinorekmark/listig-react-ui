@@ -37,7 +37,6 @@ const EditableList = () => {
     const { id } = useParams();
     return (
         <>
-            <h1>Editable List for ID: {id}</h1>
             <List>
                 <DragDropContext onDragEnd={handleDragEnd}>
                     <Droppable droppableId="items">
@@ -60,7 +59,7 @@ const EditableList = () => {
                                                 sx={{
                                                     cursor: 'pointer',
                                                     border: '1px solid',
-                                                    margin: '5px',
+                                                    marginTop: '5px',
                                                     borderRadius: '5px',
                                                     display: 'flex',
                                                     alignItems: 'center',
@@ -72,7 +71,7 @@ const EditableList = () => {
                                                         <DragIndicator />
                                                     </Box>
                                                 </ListItemAvatar>
-                                                <ListItemText primary={item.title} />
+                                                <ListItemText primary={item.title}  primaryTypographyProps={{fontSize: '18px'}} />
                                                 <IconButton edge="end" aria-label="delete" onClick={() => removeItem(item.id)}>
                                                     <ClearIcon />
                                                 </IconButton>

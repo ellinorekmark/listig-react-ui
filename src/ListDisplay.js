@@ -9,8 +9,10 @@ import Avatar from "@mui/material/Avatar";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import ListItemText from "@mui/material/ListItemText";
 import PersonIcon from "@mui/icons-material/Person";
-import {Typography} from "@mui/material";
+import {Icon, Typography} from "@mui/material";
 import {DragIndicator} from "@mui/icons-material";
+import ClearIcon from "@mui/icons-material/Clear";
+import IconButton from "@mui/material/IconButton";
 
 
 let dummyList = JSON.parse('[{"id": "1","title": "eat","completed": "false"},{"id": "2","title": "sleep","completed": "false"},{"id": "3","title": "study","completed": "true"}]');
@@ -28,7 +30,7 @@ const EditableList = () => {
 
                         sx={{ cursor: 'pointer',
                             border: '1px solid ',
-                            margin: '5px',
+                            marginTop: '5px',
                             borderRadius: '5px' ,
                         }} >
                         <ListItemAvatar>
@@ -36,9 +38,11 @@ const EditableList = () => {
                             </Box>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={item.title}
+                            primary={item.title} primaryTypographyProps={{fontSize: '18px'}}
                         />
-
+                        <IconButton edge="end"  >
+<Icon></Icon>
+                        </IconButton>
                     </ListItem>
                 ))}
             </List>
