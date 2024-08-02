@@ -11,8 +11,7 @@ import {Typography, CircularProgress, ToggleButtonGroup, ToggleButton} from '@mu
 import {useNavigate} from 'react-router-dom';
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
-
-
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 const apiCaller = new ApiCaller();
 
 export default function InteractiveList() {
@@ -28,7 +27,7 @@ export default function InteractiveList() {
 
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
-        filterList(newAlignment); // Pass the new alignment to filterList
+        filterList(newAlignment);
     };
     useEffect(() => {
 
@@ -56,17 +55,14 @@ export default function InteractiveList() {
     function filterList(option) {
         switch (option) {
             case "all":
-                console.log("all")
                 setFilteredList(overviewData);
                 break;
 
             case "private":
-                console.log("private")
                 setFilteredList(overviewData.filter(privateList));
                 break;
 
             case "shared":
-                console.log("shared")
                 setFilteredList(overviewData.filter(sharedList));
                 break;
         }
@@ -79,20 +75,26 @@ export default function InteractiveList() {
     function sharedList(l) {
         return l.users !== 1;
     }
+    function getListIcon(type) {
+        switch (type) {
+            case 'CHECK':
+                return <LibraryAddCheckIcon />;
+            default:
+                return <ListAltIcon />;
+        }
+    }
+
 
     return (
         <>
-            <Box maxWidth={750} sx={{mx: 'auto'}}>
-                <Box sx={{
-                    paddingTop: 2
-                }}>
-                    <Typography fontSize={"xx-large"} sx={{
-                        fontFamily: 'Garamond',
-                    }}>
+            <Box maxWidth={750} sx={{ mx: 'auto' }}>
+                <Box sx={{ paddingTop: 2 }}>
+                    <Typography fontSize={"xx-large"} sx={{ fontFamily: 'Garamond' }}>
                         Lists
-                    </Typography><br/>
+                    </Typography>
+                    <br />
                 </Box>
-                <Box sx={{paddingBottom: 2}}>
+                <Box sx={{ paddingBottom: 2 }}>
                     <ToggleButtonGroup
                         color="primary"
                         value={alignment}
@@ -104,16 +106,21 @@ export default function InteractiveList() {
                         <ToggleButton value="all">All</ToggleButton>
                         <ToggleButton value="shared">Shared</ToggleButton>
                     </ToggleButtonGroup>
-
                 </Box>
 
-                {loading ? (
-                    <Box sx={{display: 'flex', justifyContent: 'center', mt: 4}}>
-                        <CircularProgress/>
+                {loading && (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                        <CircularProgress />
                     </Box>
-                ) : (
+                )}
 
+                {!loading && activeFiltered.length === 0 && (
+                    <Typography variant="h7" color="textSecondary" align="center">
+                        Empty
+                    </Typography>
+                )}
 
+                {!loading && activeFiltered.length > 0 && (
                     <List dense>
                         {activeFiltered.map((list) => (
                             <ListItem
@@ -124,28 +131,29 @@ export default function InteractiveList() {
                                     border: '1px solid ',
                                     marginTop: '5px',
                                     borderRadius: '5px',
-                                    borderColor: 'gray'
-                                }}>
+                                    borderColor: 'gray',
+                                }}
+                            >
                                 <ListItemAvatar>
                                     <Avatar>
-                                        <ListAltIcon/>
+                                        {getListIcon(list.type)}
                                     </Avatar>
                                 </ListItemAvatar>
                                 <ListItemText
                                     primary={list.name}
                                     secondary={list.desc}
                                 />
-                                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                                    <PersonIcon/>
-                                    <Typography sx={{ml: 1}}>{list.owner}</Typography>
+                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                    <PersonIcon />
+                                    <Typography sx={{ ml: 1 }}>{list.owner}</Typography>
                                 </Box>
                             </ListItem>
                         ))}
                     </List>
-                )
-                }
-
+                )}
             </Box>
         </>
-    );
+
+
+);
 }
