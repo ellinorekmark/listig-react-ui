@@ -10,31 +10,33 @@ import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 
-const initialList = [
-    { id: "1", title: "eat", completed: false },
-    { id: "2", title: "sleep", completed: false },
-    { id: "3", title: "study", completed: true }
-];
 
-const EditableList = () => {
-    const [list, setList] = useState(initialList);
+
+const EditableList = ({ uList, updateList }) => {
+
 
     const handleDragEnd = (result) => {
         if (!result.destination) return;
         const startIndex = result.source.index;
         const endIndex = result.destination.index;
-        const copyList = [...list];
+        const copyList = [...uList.items];
         const [reorderItem] = copyList.splice(startIndex, 1);
         copyList.splice(endIndex, 0, reorderItem);
-        setList(copyList);
+        uList.items = copyList;
+        updateList(uList);
     };
 
     const removeItem = (id) => {
-        const filteredList = list.filter(item => item.id !== id);
-        setList(filteredList);
+        const filteredList = uList.items.filter(item => item.id !== id);
+
+
+        const updatedList = {
+            ...uList,
+            items: uList.items.filter(item => item.id !== id)
+        };
+        updateList(updatedList);
     };
 
-    const { id } = useParams();
     return (
         <>
             <List>
@@ -45,11 +47,11 @@ const EditableList = () => {
                                 ref={droppableProvider.innerRef}
                                 {...droppableProvider.droppableProps}
                             >
-                                {list.map((item, index) => (
+                                {uList.items.map((item, index) => (
                                     <Draggable
                                         index={index}
                                         key={item.id}
-                                        draggableId={item.id}
+                                        draggableId={item.id+""}
                                     >
                                         {(draggableProvider) => (
                                             <ListItem
@@ -63,7 +65,8 @@ const EditableList = () => {
                                                     borderRadius: '5px',
                                                     display: 'flex',
                                                     alignItems: 'center',
-                                                    justifyContent: 'space-between'
+                                                    justifyContent: 'space-between',
+                                                    borderColor: 'gray'
                                                 }}
                                             >
                                                 <ListItemAvatar>
@@ -71,7 +74,7 @@ const EditableList = () => {
                                                         <DragIndicator />
                                                     </Box>
                                                 </ListItemAvatar>
-                                                <ListItemText primary={item.title}  primaryTypographyProps={{fontSize: '18px'}} />
+                                                <ListItemText primary={item.item}  primaryTypographyProps={{fontSize: '18px'}} />
                                                 <IconButton edge="end" aria-label="delete" onClick={() => removeItem(item.id)}>
                                                     <ClearIcon />
                                                 </IconButton>

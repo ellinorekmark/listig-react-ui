@@ -37,13 +37,14 @@ const AuthProvider = ({ children }) => {
         const user = res
         setUser(user)
         localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('userLogin', userLoginData);
+        localStorage.setItem('loginDetails', userLoginData);
         return true;
     };
 
     const logout = () => {
         setUser(null);
         localStorage.removeItem('user');
+        localStorage.removeItem('loginDetails');
     };
 
     return (

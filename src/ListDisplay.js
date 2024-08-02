@@ -1,53 +1,103 @@
-import React from 'react';
-import {useParams} from 'react-router-dom';
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import {useState} from "react";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import ListAltIcon from "@mui/icons-material/ListAlt";
-import ListItemText from "@mui/material/ListItemText";
-import PersonIcon from "@mui/icons-material/Person";
-import {Icon, Typography} from "@mui/material";
-import {DragIndicator} from "@mui/icons-material";
-import ClearIcon from "@mui/icons-material/Clear";
-import IconButton from "@mui/material/IconButton";
+import React, {useState} from 'react';
+import {
+    Box,
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    IconButton,
+    TextField,
+    Button,
+    Avatar,
+    Icon
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
 
+const ListDisplay = ({uList, updateList}) => {
+    const [newItem, setItem] = useState('');
 
-let dummyList = JSON.parse('[{"id": "1","title": "eat","completed": "false"},{"id": "2","title": "sleep","completed": "false"},{"id": "3","title": "study","completed": "true"}]');
-const EditableList = () => {
+    const addToList = () => {
+        if (newItem.trim() === '') return;
+        const newItemObj = {
+            listId: uList.listInfo.id,
+            item: newItem
+        };
 
+        const updatedList = {
+            ...uList,
+            items: [...uList.items, newItemObj]
+        };
 
+        updateList(updatedList);
 
-    const {id} = useParams();
+        setItem('');
+    };
+
     return (
         <>
             <List>
-                {dummyList.map((item) => (
+                {uList.items.map((item) => (
                     <ListItem
                         key={item.id}
-
-                        sx={{ cursor: 'pointer',
-                            border: '1px solid ',
+                        sx={{
+                            cursor: 'pointer',
+                            border: '1px solid',
                             marginTop: '5px',
-                            borderRadius: '5px' ,
-                        }} >
+                            borderRadius: '5px',
+                            borderColor: 'gray'
+                        }}
+                    >
                         <ListItemAvatar>
                             <Box>
                             </Box>
                         </ListItemAvatar>
                         <ListItemText
-                            primary={item.title} primaryTypographyProps={{fontSize: '18px'}}
+                            primary={item.item}
+                            primaryTypographyProps={{fontSize: '18px'}}
                         />
                         <IconButton edge="end"  >
-<Icon></Icon>
+                            <Icon></Icon>
                         </IconButton>
                     </ListItem>
                 ))}
             </List>
+            <Box sx={{display: 'flex', alignItems: 'center', mt: 2}}>
+                <TextField
+                    inputProps={{ maxLength: 33 }}
+                    id="new-item"
+                    label="New Item"
+                    variant="outlined"
+                    value={newItem}
+                    onChange={(e) => setItem(e.target.value)}
+                    fullWidth
+                    sx={{height: '56px'}}
+                    InputProps={{
+                        sx: {
+                            borderTopRightRadius: 0,
+                            borderBottomRightRadius: 0,
+                            '& .MuiOutlinedInput-notchedOutline': {
+                                borderTopRightRadius: 0,
+                                borderBottomRightRadius: 0,
+                            },
+                            height: '56px',
+                        }
+                    }}
+                />
+                <Button
+                    onClick={addToList}
+                    variant="contained"
+                    sx={{
+                        borderTopLeftRadius: 0,
+                        borderBottomLeftRadius: 0,
+                        height: '56px',  // Match the height of the TextField
+                        minWidth: '56px', // Maintain square button
+                    }}
+                >
+                    <AddIcon/>
+                </Button>
+            </Box>
         </>
     );
 };
 
-export default EditableList;
+export default ListDisplay;
