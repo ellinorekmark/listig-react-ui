@@ -17,7 +17,6 @@ export class ApiCaller {
 
 
     async sendPost(path, data, loginDetails) {
-      console.log(JSON.stringify(data))
       const response = await fetch(this.baseUrl + path, {
         method: 'POST',
         headers: {
@@ -28,11 +27,9 @@ export class ApiCaller {
       })
       if (!response.ok) {
         const errorResponse = await response.json()
-        console.log(errorResponse)
         throw new Error(errorResponse)
       }
       const result = await response.json()
-      console.log(result)
       return result
     }
 
@@ -48,7 +45,6 @@ export class ApiCaller {
         throw new Error(await response.json())
       }
       let res = await response.json();
-      console.log(res)
       return res
     }
     async  sendDelete(path, data, loginDetails){

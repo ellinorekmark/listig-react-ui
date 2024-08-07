@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import PersonIcon from '@mui/icons-material/Person';
-import {Typography, CircularProgress, ToggleButtonGroup, ToggleButton} from '@mui/material';
+import {Typography, CircularProgress, ToggleButtonGroup, ToggleButton, Icon} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
@@ -85,6 +85,9 @@ export default function InteractiveList() {
     }
 
 
+    function ownsList(l){
+        return l.owner === user.username;
+    }
     return (
         <>
             <Box maxWidth={750} sx={{ mx: 'auto' }}>
@@ -128,10 +131,9 @@ export default function InteractiveList() {
                                 onClick={() => goToList(list.id)}
                                 sx={{
                                     cursor: 'pointer',
-                                    border: '1px solid ',
+                                    border: '1px solid #ccc',
                                     marginTop: '5px',
                                     borderRadius: '5px',
-                                    borderColor: 'gray',
                                 }}
                             >
                                 <ListItemAvatar>
@@ -143,10 +145,11 @@ export default function InteractiveList() {
                                     primary={list.name}
                                     secondary={list.desc}
                                 />
-                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                {!ownsList(list)? (<Box sx={{ display: 'flex', alignItems: 'center' }}>
                                     <PersonIcon />
                                     <Typography sx={{ ml: 1 }}>{list.owner}</Typography>
-                                </Box>
+                                </Box>): (<Box><Icon></Icon></Box>)}
+
                             </ListItem>
                         ))}
                     </List>

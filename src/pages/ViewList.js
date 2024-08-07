@@ -1,27 +1,19 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {Box, Button, CircularProgress, TextField} from '@mui/material';
-import EditableList from '../EditableList';
-import ListDisplay from "../ListDisplay";
-import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
+import {Box,  CircularProgress} from '@mui/material';
 import {AuthContext} from "../AuthContext";
 import SockJS from "sockjs-client";
 import {Client} from "@stomp/stompjs";
 import {ApiCaller} from "../ApiCaller";
 import Typography from "@mui/material/Typography";
-import AddIcon from "@mui/icons-material/Add";
-import CheckListDisplay from "../CheckListDisplay";
+
+import ListDisplay from "../components/ListDisplay";
 
 const apiCaller = new ApiCaller();
 
 const ViewList = () => {
     const {id} = useParams();
-    const [locked, setLocked] = useState(true);
 
-    const toggleLocked = () => {
-        setLocked(!locked);
-    };
     const {loginDetails} = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [uList, setList] = useState(null);
@@ -61,7 +53,6 @@ const ViewList = () => {
                 console.error('Additional details: ' + frame.body);
             }
 
-
         });
         socket.onclose = function (event) {
             console.error('WebSocket is closed now.', event);
@@ -70,7 +61,6 @@ const ViewList = () => {
         socket.onerror = function (event) {
             console.error('WebSocket error observed:', event);
         };
-
 
         client.activate();
         setStompClient(client);
@@ -83,122 +73,30 @@ const ViewList = () => {
     }, [loginDetails]);
 
     const updateList = (newList) => {
-        console.log("New List: " + JSON.stringify(newList.items))
-
+        console.log("let's try to update the list")
+        console.log(JSON.stringify(newList))
+        setList(newList)
 
         if (stompClient && stompClient.connected) {
             stompClient.publish(`/app/list/${id}`, {}, JSON.stringify(newList));
             console.log("Sent update to WebSocket");
         }
     };
-    const [newItem, setItem] = useState('');
 
-    const addToList = () => {
-        if (newItem.trim() === '') return;
-        const newItemObj = {
-            listId: uList.listInfo.id,
-            item: newItem
-        };
-
-        const updatedList = {
-            ...uList,
-            items: [...uList.items, newItemObj]
-        };
-
-        updateList(updatedList);
-
-        setItem('');
-    };
-
-    function getListType(type) {
-        switch (type.listInfo.type) {
-            case 'CHECK':
-                return <CheckListDisplay uList={uList} updateList={updateList}/>;
-            default:
-                return <ListDisplay uList={uList} updateList={updateList}/>;
-        }
-    }
     return (
         <>
-
-            {loading ? <Box><CircularProgress/><Typography>Loading List</Typography></Box> :
-                <Box maxWidth={750} sx={{mx: 'auto'}} variant="contained">
-                    <Box
-                        sx={{position: 'relative',}}
-                    >
-                        <Box sx={{marginTop: 2,}}>
-
-                            <Typography fontSize={"xx-large"} sx={{
-                                fontFamily: 'Garamond',
-                            }}>
-                                {uList.listInfo.listName}
-                            </Typography><br/>
-
-                        </Box>
-
-
-                        <Box sx={{mt: 2}} onClick={toggleLocked}
-                             sx={{
-                                 position: 'absolute',
-                                 top: 8,
-                                 right: 8,
-                             }}>
-
-                            {locked ? <LockIcon sx={{cursor: 'pointer'}} onClick={toggleLocked}/> : <LockOpenIcon/>}
-                        </Box>
-                        <Box sx={{marginBottom: 2}}>
-                            <Typography fontSize={"large"} sx={{fontFamily: 'Garamond'}}>
-                                {uList.listInfo.listDesc}
-                            </Typography>
-                        </Box>
-                    </Box>
-
-                    {locked ?
-                        <Box>
-                            {getListType(uList)}
-                        </Box> :
-                        <EditableList uList={uList} updateList={updateList}/>}
-                    <Box sx={{display: 'flex', alignItems: 'center', mt: 2}}>
-                        <TextField
-                            inputProps={{ maxLength: 33 }}
-                            id="new-item"
-                            label="New Item"
-                            variant="outlined"
-                            value={newItem}
-                            onChange={(e) => setItem(e.target.value)}
-                            fullWidth
-                            sx={{height: '56px'}}
-                            InputProps={{
-                                sx: {
-                                    borderTopRightRadius: 0,
-                                    borderBottomRightRadius: 0,
-                                    '& .MuiOutlinedInput-notchedOutline': {
-                                        borderTopRightRadius: 0,
-                                        borderBottomRightRadius: 0,
-                                    },
-                                    height: '56px',
-                                }
-                            }}
-                        />
-                        <Button
-                            onClick={addToList}
-                            variant="contained"
-                            sx={{
-                                borderTopLeftRadius: 0,
-                                borderBottomLeftRadius: 0,
-                                height: '56px',  // Match the height of the TextField
-                                minWidth: '56px', // Maintain square button
-                            }}
-                        >
-                            <AddIcon/>
-                        </Button>
-                    </Box>
-
+            {loading ? (
+                <Box>
+                    <CircularProgress/>
+                    <Typography>Loading List</Typography>
                 </Box>
-            }
+            ) : (
+
+                <ListDisplay uList={uList} updateList={updateList}></ListDisplay>
+
+            )}
         </>
     );
 };
-
 export default ViewList;
 

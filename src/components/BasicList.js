@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-const ListDisplay = ({uList, updateList}) => {
+const BasicList = ({uList}) => {
 
 
     return (
@@ -24,7 +24,7 @@ const ListDisplay = ({uList, updateList}) => {
                         key={item.id}
                         sx={{
                             cursor: 'pointer',
-                            border: '1px solid',
+                            border: '1px solid #ccc',
                             marginTop: '5px',
                             borderRadius: '5px',
                             borderColor: 'gray'
@@ -49,4 +49,4 @@ const ListDisplay = ({uList, updateList}) => {
     );
 };
 
-export default ListDisplay;
+export default BasicList;

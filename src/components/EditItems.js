@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 
 
 
-const EditableList = ({ uList, updateList }) => {
+const EditItems = ({ uList, updateList }) => {
 
 
     const handleDragEnd = (result) => {
@@ -27,9 +27,6 @@ const EditableList = ({ uList, updateList }) => {
     };
 
     const removeItem = (id) => {
-        const filteredList = uList.items.filter(item => item.id !== id);
-
-
         const updatedList = {
             ...uList,
             items: uList.items.filter(item => item.id !== id)
@@ -60,13 +57,13 @@ const EditableList = ({ uList, updateList }) => {
                                                 {...draggableProvider.dragHandleProps}
                                                 sx={{
                                                     cursor: 'pointer',
-                                                    border: '1px solid',
+                                                    border: '1px solid #ccc',
                                                     marginTop: '5px',
                                                     borderRadius: '5px',
                                                     display: 'flex',
                                                     alignItems: 'center',
                                                     justifyContent: 'space-between',
-                                                    borderColor: 'gray'
+
                                                 }}
                                             >
                                                 <ListItemAvatar>
@@ -92,4 +89,4 @@ const EditableList = ({ uList, updateList }) => {
     );
 };
 
-export default EditableList;
+export default EditItems;

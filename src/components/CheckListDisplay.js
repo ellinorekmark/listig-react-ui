@@ -31,7 +31,6 @@ const CheckListDisplay = ({ uList, updateList }) => {
                 : item
         );
 
-        // Assuming updateList is a function that updates the list in the parent component
         updateList({ ...uList, items: updatedItems });
     };
 
@@ -43,10 +42,10 @@ const CheckListDisplay = ({ uList, updateList }) => {
                         key={item.id}
                         sx={{
                             cursor: 'pointer',
-                            border: '1px solid',
+                            border: '1px solid #ccc',
                             marginTop: '5px',
                             borderRadius: '5px',
-                            borderColor: 'gray'
+
                         }}
                         onClick={() => handleItemClick(item.id)} // Add onClick handler here
                     >

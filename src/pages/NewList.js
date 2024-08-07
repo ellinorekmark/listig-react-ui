@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {CircularProgress, FormControl, MenuItem, Select, TextField, Typography} from "@mui/material";
+import {Alert, CircularProgress, FormControl, MenuItem, Select, TextField, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {AuthContext} from "../AuthContext";
@@ -107,9 +107,7 @@ try{
                                 onChange={handleTypeChange}
                                 sx={{width: 200,
                                     marginBottom: 2}}
-
                             >
-
                                 <MenuItem value={"BASIC"}>Normal</MenuItem>
                                 <MenuItem value={"CHECK"}>Checklist</MenuItem>
 
@@ -133,7 +131,7 @@ try{
                             )}
 
                         {apiFail ? (
-                            <Typography color={"secondary"} sx={{p:1}}>Failed to create list. Please try again later.</Typography> ): (<Box></Box>)}
+                            <Alert severity="error">Failed to create list. Please try again later.</Alert> ): (<Box></Box>)}
                     </Box>
 
                 </Box>
