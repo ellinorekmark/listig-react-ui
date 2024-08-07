@@ -15,6 +15,9 @@ import AddItem from "./AddItem";
 const ListDisplay = ({uList, updateList}) => {
     const {user} = useContext(AuthContext);
     const [locked, setLocked] = useState(true);
+    const [editRights, setEditRights] = useState(() => {
+        return user.username === uList.owner || uList.editors.includes(user.username);
+    });
 
     const toggleLocked = () => {
         setLocked(!locked);
@@ -68,7 +71,7 @@ const ListDisplay = ({uList, updateList}) => {
                                 {locked ? <LockIcon sx={{p: 1}}/> : <LockOpenIcon sx={{cursor: 'pointer', p: 1}}/>}
                             </IconButton>
 
-                            <EditDialog uList={uList} updateList={updateList}></EditDialog>
+                            {editRights && (<EditDialog uList={uList} updateList={updateList}></EditDialog>)}
 
                         </Box>
                         <Typography sx={{gridRow: '2', gridColumn: '1 / 3', textAlign: 'left', p: 1}}>

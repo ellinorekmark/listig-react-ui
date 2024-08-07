@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     Box,
     IconButton,
@@ -17,14 +17,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
 import {useNavigate} from "react-router-dom";
+
 const apiCaller = new ApiCaller()
 const EditDialog = ({uList, updateList}) => {
     const {loginDetails, user} = useContext(AuthContext);
     const [dialog, setDialog] = useState(false);
-    const [deleteLoading, setDeleteLoading] = useState(false)
-    const [listCopy, setCopy] = useState( { ...uList })
+    const [listCopy, setCopy] = useState({...uList})
+    const [isOwner, setIsOwner] = useState(false)
+    const [pageTitle, setPageTitle] = useState("Edit List")
     const navigate = useNavigate();
 
+    useEffect(() => {
+        setIsOwner(ownsList)
+    }, [user]);
 
     function openDialog() {
         setDialog(true);
@@ -33,6 +38,11 @@ const EditDialog = ({uList, updateList}) => {
     function closeDialog() {
         setDialog(false);
     }
+
+    function ownsList() {
+        return uList.owner === user.username;
+    }
+
 
     function saveAndClose() {
         let deletedEditors = [];
@@ -49,7 +59,7 @@ const EditDialog = ({uList, updateList}) => {
         const deletedUsers = deletedEditors.concat(deletedViewers)
 
         deletedUsers.forEach(user => {
-            apiCaller.sendPost("user/removeEditor", { user: user }, loginDetails)
+            apiCaller.sendPost("user/removeEditor", {user: user}, loginDetails)
         });
         console.log("This is the updated, copy:", JSON.stringify(listCopy))
         updateList(listCopy)
@@ -57,15 +67,15 @@ const EditDialog = ({uList, updateList}) => {
     }
 
     async function deleteList() {
-        setDeleteLoading(true)
         await apiCaller.sendDelete("list", uList.listInfo.id, loginDetails)
         setDialog(false)
         navigate(`/overview`);
     }
 
-    function updateCopy(newCopy){
-           setCopy(newCopy)
+    function updateCopy(newCopy) {
+        setCopy(newCopy)
     }
+
     return (
         <>
             <IconButton variant="outlined" onClick={openDialog}>
@@ -79,7 +89,7 @@ const EditDialog = ({uList, updateList}) => {
             >
                 <DialogTitle><Box sx={{paddingTop: 2}}>
                     <Typography fontSize={"xx-large"} sx={{fontFamily: 'Garamond', textAlign: 'center'}}>
-                        Edit List
+                        {pageTitle}
                     </Typography>
                 </Box></DialogTitle>
                 <DialogContent>
@@ -90,20 +100,26 @@ const EditDialog = ({uList, updateList}) => {
                         marginTop: '5px',
                         borderRadius: '5px',
                     }} variant="contained">
-                    <EditListDetails list={listCopy} updateCopy={updateCopy}></EditListDetails>
-                    <Accordion>
-                        <AccordionSummary id="panel-header" aria-controls="panel-content"
-                                          sx={{backgroundColor: "primary.main"}}>
-                            Delete list
-                        </AccordionSummary>
-                        <AccordionDetails fullWidth sx={{ justifyContent: 'center' }}>
-                            <Typography textAlign={'center'} p={1}>Warning: <br />Deleting a list cannot be reversed.</Typography>
-                            <Button onClick={deleteList} variant={"contained"} fullWidth sx={{ padding: 2 }} color={"error"}>Delete list</Button>
-                        </AccordionDetails>
-                    </Accordion>
+
+                        <EditListDetails list={listCopy} updateCopy={updateCopy}></EditListDetails>
+                        {isOwner && (
+                            <Accordion>
+                                <AccordionSummary id="panel-header" aria-controls="panel-content"
+                                                  sx={{backgroundColor: "primary.main"}}>
+                                    Delete list
+                                </AccordionSummary>
+                                <AccordionDetails sx={{justifyContent: 'center'}}>
+                                    <Typography textAlign={'center'} p={1}>Warning: <br/>Deleting a list cannot be
+                                        reversed.</Typography>
+                                    <Button onClick={deleteList} variant={"contained"} sx={{padding: 2}}
+                                            color={"error"}>Delete list</Button>
+                                </AccordionDetails>
+                            </Accordion>
+                        )}
+
                     </Box>
                 </DialogContent>
-                <DialogActions sx={{ justifyContent: 'center' }}>
+                <DialogActions sx={{justifyContent: 'center'}}>
                     <Button onClick={closeDialog} variant="contained">
                         Cancel
                     </Button>

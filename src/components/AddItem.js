@@ -3,7 +3,7 @@ import {Box, Button, TextField} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
 
-const ListTypeSorter = ({uList, updateList}) => {
+const AddItem = ({uList, updateList}) => {
     const [newItem, setItem] = useState('');
 
     const addToList = () => {
@@ -66,7 +66,7 @@ const ListTypeSorter = ({uList, updateList}) => {
     );
 };
 
-export default ListTypeSorter;
+export default AddItem;
 
 
 

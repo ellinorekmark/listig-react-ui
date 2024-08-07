@@ -41,6 +41,30 @@ const AuthProvider = ({ children }) => {
         return true;
     };
 
+    const createAccount = async (account) => {
+        const response = await fetch(baseurl + 'user/newAccount', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify(account)
+        })
+        const res = await response.json()
+
+        if (!response.ok) {
+            return false
+        }
+
+        const user = res
+        setUser(user)
+        const userLoginData = btoa(account.username + ':' + account.password)
+        setLogin(userLoginData)
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('loginDetails', userLoginData);
+        return true;
+    }
+
     const logout = () => {
         setUser(null);
         localStorage.removeItem('user');
@@ -48,7 +72,7 @@ const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, loginDetails }}>
+        <AuthContext.Provider value={{ user, login, logout, loginDetails, createAccount }}>
             {children}
         </AuthContext.Provider>
     );
