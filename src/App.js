@@ -1,24 +1,20 @@
 import React from 'react';
 import './App.css';
 import Nav from './Nav.js';
-import Appbar from './components/Appbar.js';
 import AppRouter from './Router';
-import { BrowserRouter as Router } from 'react-router-dom';
-import AppBar from "@mui/material/AppBar";
-
-
+import {BrowserRouter as Router} from 'react-router-dom';
 
 function App() {
-  return (
+    return (
 
-    <div className="App">
-      <Router>
-
-        <AppRouter />
-        <Nav />
-      </Router>
-    </div>
-  );
+        <div className="App">
+            <Router>
+                <AppRouter/>
+                <Nav/>
+            </Router>
+            <br/><br/><br/>
+        </div>
+    );
 }
 
 export default App;

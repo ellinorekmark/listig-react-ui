@@ -85,7 +85,9 @@ const HandleUsers = ({list, updateCopy}) => {
                     aria-controls="panel-content"
                     sx={{backgroundColor: "primary.main"}}
                 >
-                    Users
+                    <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                        <Typography p={1} fontSize={"large"}>Users</Typography>
+                    </Box>
                 </AccordionSummary>
                 <AccordionDetails>
                     <br/>
@@ -139,7 +141,9 @@ const HandleUsers = ({list, updateCopy}) => {
                     aria-controls="panel-content"
                     sx={{backgroundColor: "primary.main"}}
                 >
-                    Add User
+                    <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                        <Typography p={1} fontSize={"large"}>Add User</Typography>
+                    </Box>
                 </AccordionSummary>
                 <AccordionDetails sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                     <FormControl sx={{maxWidth: 350, marginBottom: 2}}>

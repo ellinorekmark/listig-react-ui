@@ -45,19 +45,15 @@ const NewList = () => {
             viewers: [],
             items: []
         }
-try{
+        try {
             const result = await apiCaller.sendPost("list", newList, loginDetails);
             const id = result.listInfo.id;
             navigate(`/list/${id}`);
 
-        }
-        catch(e){
+        } catch (e) {
             setApiFail(true)
             setLoading(false)
         }
-
-
-
     }
 
     return (
@@ -85,7 +81,7 @@ try{
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             fullWidth
-                            sx={{marginBottom:1}}
+                            sx={{marginBottom: 1}}
                             error={titleError}
                             helperText={titleError ? "Title is required" : ""}
                         />
@@ -97,7 +93,7 @@ try{
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
                             fullWidth
-                            sx={{marginBottom:1}}
+                            sx={{marginBottom: 1}}
                         />
 
                         <FormControl>
@@ -105,8 +101,10 @@ try{
                             <Select
                                 value={listType}
                                 onChange={handleTypeChange}
-                                sx={{width: 200,
-                                    marginBottom: 2}}
+                                sx={{
+                                    width: 200,
+                                    marginBottom: 2
+                                }}
                             >
                                 <MenuItem value={"BASIC"}>Normal</MenuItem>
                                 <MenuItem value={"CHECK"}>Checklist</MenuItem>
@@ -115,30 +113,29 @@ try{
                         </FormControl>
 
                         {loading ? (
-                            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                                <CircularProgress />
+                            <Box sx={{display: 'flex', justifyContent: 'center', mt: 4}}>
+                                <CircularProgress/>
                             </Box>
                         ) : (
-                        <Button
-                            fullWidth
-                            variant="outlined"
-                            sx={{ mt: 1,
-                                p: 1}}
-                            onClick={handleCreate}
-                        >
-                            Create
-                        </Button>
-                            )}
+                            <Button
+                                fullWidth
+                                variant="outlined"
+                                sx={{
+                                    mt: 1,
+                                    p: 1
+                                }}
+                                onClick={handleCreate}
+                            >
+                                Create
+                            </Button>
+                        )}
 
                         {apiFail ? (
-                            <Alert severity="error">Failed to create list. Please try again later.</Alert> ): (<Box></Box>)}
+                            <Alert severity="error">Failed to create list. Please try again later.</Alert>) : (
+                            <Box></Box>)}
                     </Box>
-
                 </Box>
-
             </Box>
-
-
         </>
     );
 };

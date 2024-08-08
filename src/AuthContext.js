@@ -1,9 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
+import {BASE_URL} from "./constants";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-    const baseurl = "http://localhost:8080/api/";
+    const baseurl = BASE_URL
     const [user, setUser] = useState(null);
     const [loginDetails, setLogin] = useState(null);
 

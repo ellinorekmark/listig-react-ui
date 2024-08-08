@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
     Box,
     List,
@@ -6,15 +6,10 @@ import {
     ListItemAvatar,
     ListItemText,
     IconButton,
-    TextField,
-    Button,
-    Avatar,
     Icon
 } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
 
 const BasicList = ({uList}) => {
-
 
     return (
         <>
@@ -38,7 +33,7 @@ const BasicList = ({uList}) => {
                             primary={item.item}
                             primaryTypographyProps={{fontSize: '18px'}}
                         />
-                        <IconButton edge="end"  >
+                        <IconButton edge="end">
                             <Icon></Icon>
                         </IconButton>
                     </ListItem>

@@ -1,7 +1,9 @@
+import {BASE_URL} from "./constants";
+
 export class ApiCaller {
 
-    //baseUrl = "/api/"
-    baseUrl = "http://localhost:8080/api/"
+
+    baseUrl = BASE_URL
 
     constructor() {
 
@@ -20,8 +22,7 @@ export class ApiCaller {
             const errorResponse = await response.json()
             throw new Error(errorResponse)
         }
-        const result = await response.json()
-        return result
+        return  await response.json()
     }
     async sendPostNoLogin(path, data) {
         const response = await fetch(this.baseUrl + path, {
@@ -35,8 +36,8 @@ export class ApiCaller {
             const errorResponse = await response.json()
             throw new Error(errorResponse)
         }
-        const result = await response.json()
-        return result
+
+        return await response.json()
     }
 
     async sendGet(path, loginDetails) {
@@ -50,8 +51,7 @@ export class ApiCaller {
         if (!response.ok) {
             throw new Error(await response.json())
         }
-        let res = await response.json();
-        return res
+        return await response.json();
     }
 
     async sendDelete(path, data, loginDetails) {

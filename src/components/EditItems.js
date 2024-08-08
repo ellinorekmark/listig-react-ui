@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import {DragDropContext, Draggable, Droppable} from "@hello-pangea/dnd";
 import ListItemText from "@mui/material/ListItemText";
-import { DragIndicator } from '@mui/icons-material';
+import {DragIndicator} from '@mui/icons-material';
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 
-
-
-const EditItems = ({ uList, updateList }) => {
-
+const EditItems = ({uList, updateList}) => {
 
     const handleDragEnd = (result) => {
         if (!result.destination) return;
@@ -48,7 +44,7 @@ const EditItems = ({ uList, updateList }) => {
                                     <Draggable
                                         index={index}
                                         key={item.id}
-                                        draggableId={item.id+""}
+                                        draggableId={item.id + ""}
                                     >
                                         {(draggableProvider) => (
                                             <ListItem
@@ -68,12 +64,14 @@ const EditItems = ({ uList, updateList }) => {
                                             >
                                                 <ListItemAvatar>
                                                     <Box>
-                                                        <DragIndicator />
+                                                        <DragIndicator/>
                                                     </Box>
                                                 </ListItemAvatar>
-                                                <ListItemText primary={item.item}  primaryTypographyProps={{fontSize: '18px'}} />
-                                                <IconButton edge="end" aria-label="delete" onClick={() => removeItem(item.id)}>
-                                                    <ClearIcon />
+                                                <ListItemText primary={item.item}
+                                                              primaryTypographyProps={{fontSize: '18px'}}/>
+                                                <IconButton edge="end" aria-label="delete"
+                                                            onClick={() => removeItem(item.id)}>
+                                                    <ClearIcon/>
                                                 </IconButton>
                                             </ListItem>
                                         )}

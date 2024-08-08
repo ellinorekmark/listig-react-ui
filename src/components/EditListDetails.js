@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-    Accordion, AccordionDetails, AccordionSummary,
+    Accordion, AccordionDetails, AccordionSummary, Box,
     FormControl, MenuItem, Select, TextField, Typography
 } from "@mui/material";
 import HandleUsers from "./HandleUsers";
@@ -48,7 +48,9 @@ const EditListDetails = ({list, updateCopy}) => {
                     aria-controls="panel-content"
                     sx={{backgroundColor: "primary.main"}}
                 >
-                    List Details
+                    <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                        <Typography p={1} fontSize={"large"}>List Details</Typography>
+                    </Box>
                 </AccordionSummary>
                 <AccordionDetails>
                     <br/>

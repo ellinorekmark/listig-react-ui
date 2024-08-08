@@ -24,7 +24,6 @@ const EditDialog = ({uList, updateList}) => {
     const [dialog, setDialog] = useState(false);
     const [listCopy, setCopy] = useState({...uList})
     const [isOwner, setIsOwner] = useState(false)
-    const [pageTitle, setPageTitle] = useState("Edit List")
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -89,7 +88,7 @@ const EditDialog = ({uList, updateList}) => {
             >
                 <DialogTitle><Box sx={{paddingTop: 2}}>
                     <Typography fontSize={"xx-large"} sx={{fontFamily: 'Garamond', textAlign: 'center'}}>
-                        {pageTitle}
+                        Edit List
                     </Typography>
                 </Box></DialogTitle>
                 <DialogContent>
@@ -105,14 +104,16 @@ const EditDialog = ({uList, updateList}) => {
                         {isOwner && (
                             <Accordion>
                                 <AccordionSummary id="panel-header" aria-controls="panel-content"
-                                                  sx={{backgroundColor: "primary.main"}}>
-                                    Delete list
+                                                  sx={{backgroundColor: "primary.main"}} >
+                                    <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                                        <Typography p={1} fontSize={"large"}>Delete list</Typography>
+                                    </Box>
                                 </AccordionSummary>
                                 <AccordionDetails sx={{justifyContent: 'center'}}>
                                     <Typography textAlign={'center'} p={1}>Warning: <br/>Deleting a list cannot be
                                         reversed.</Typography>
                                     <Button onClick={deleteList} variant={"contained"} sx={{padding: 2}}
-                                            color={"error"}>Delete list</Button>
+                                            color={"error"} fullWidth >Delete list</Button>
                                 </AccordionDetails>
                             </Accordion>
                         )}

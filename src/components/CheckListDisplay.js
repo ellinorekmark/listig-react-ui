@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Box,
     List,
@@ -6,7 +6,6 @@ import {
     ListItemAvatar,
     ListItemText,
     IconButton,
-    Avatar,
     Icon
 } from '@mui/material';
 

@@ -73,8 +73,7 @@ const ViewList = () => {
     }, [loginDetails]);
 
     const updateList = (newList) => {
-        console.log("let's try to update the list")
-        console.log(JSON.stringify(newList))
+
         setList(newList)
 
         if (stompClient && stompClient.connected) {
