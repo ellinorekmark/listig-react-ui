@@ -1,11 +1,14 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
     Accordion, AccordionDetails, AccordionSummary, Box,
     FormControl, MenuItem, Select, TextField, Typography
 } from "@mui/material";
 import HandleUsers from "./HandleUsers";
+import ViewOnlyUsers from "./ViewOnlyUsers";
+import {AuthContext} from "../AuthContext";
 
 const EditListDetails = ({list, updateCopy}) => {
+    const {user} = useContext(AuthContext);
 
     const handleTypeChange = (event) => {
         const newList = {
@@ -55,7 +58,7 @@ const EditListDetails = ({list, updateCopy}) => {
                 <AccordionDetails>
                     <br/>
                     <TextField
-                        inputProps={{maxLength: 40}}
+                        inputProps={{maxLength: 100}}
                         id="list-title"
                         label="Title"
                         variant="outlined"
@@ -65,7 +68,7 @@ const EditListDetails = ({list, updateCopy}) => {
                         sx={{marginBottom: 1}}
                     />
                     <TextField
-                        inputProps={{maxLength: 40}}
+                        inputProps={{maxLength: 100}}
                         id="list-desc"
                         label="Description (optional)"
                         variant="outlined"
@@ -90,7 +93,21 @@ const EditListDetails = ({list, updateCopy}) => {
                     </FormControl>
                 </AccordionDetails>
             </Accordion>
-            <HandleUsers list={list} updateCopy={updateCopy}/>
+            {list.owner === user ? (<HandleUsers list={list} updateCopy={updateCopy}/>) : (
+                <Accordion>
+                    <AccordionSummary
+                        id="panel-header"
+                        aria-controls="panel-content"
+                        sx={{backgroundColor: "primary.main"}}
+                    >
+                        <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                            <Typography p={1} fontSize={"large"}>Users</Typography>
+                        </Box>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <ViewOnlyUsers uList={list}></ViewOnlyUsers>
+                    </AccordionDetails>
+                </Accordion>)}
         </>
     );
 };

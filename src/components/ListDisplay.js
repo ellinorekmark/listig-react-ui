@@ -11,6 +11,8 @@ import GroupIcon from "@mui/icons-material/Group";
 import {AuthContext} from "../AuthContext";
 import EditItems from "./EditItems";
 import AddItem from "./AddItem";
+import ViewerOptions from "./ViewerOptions";
+
 
 const ListDisplay = ({uList, updateList}) => {
     const {user} = useContext(AuthContext);
@@ -71,7 +73,7 @@ const ListDisplay = ({uList, updateList}) => {
                                 {locked ? <LockIcon sx={{p: 1}}/> : <LockOpenIcon sx={{cursor: 'pointer', p: 1}}/>}
                             </IconButton>
 
-                            {editRights && (<EditDialog uList={uList} updateList={updateList}></EditDialog>)}
+                            {editRights ? (<EditDialog uList={uList} updateList={updateList}></EditDialog>) : (<ViewerOptions uList={uList}></ViewerOptions>)}
 
                         </Box>
                         <Typography sx={{gridRow: '2', gridColumn: '1 / 3', textAlign: 'left', p: 1}}>
@@ -85,7 +87,7 @@ const ListDisplay = ({uList, updateList}) => {
                 <EditItems uList={uList} updateList={updateList}/>
             )}
 
-            <AddItem uList={uList} updateList={updateList}></AddItem>
+                {editRights && (<AddItem uList={uList} updateList={updateList}></AddItem>)}
         </Box>
         </>
     );

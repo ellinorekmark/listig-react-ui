@@ -74,7 +74,7 @@ const NewList = () => {
                         border: '1px solid #ccc',
                     }}>
                         <TextField
-                            inputProps={{maxLength: 40}}
+                            inputProps={{maxLength: 100}}
                             id="list-title"
                             label="Title"
                             variant="outlined"
@@ -86,7 +86,7 @@ const NewList = () => {
                             helperText={titleError ? "Title is required" : ""}
                         />
                         <TextField
-                            inputProps={{maxLength: 40}}
+                            inputProps={{maxLength: 100}}
                             id="list-desc"
                             label="Description (optional)"
                             variant="outlined"

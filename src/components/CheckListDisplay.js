@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState} from 'react';
 import {
     Box,
     List,
@@ -11,8 +11,13 @@ import {
 
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import {AuthContext} from "../AuthContext";
 
 const CheckListDisplay = ({ uList, updateList }) => {
+    const {user} = useContext(AuthContext);
+    const [editRights, setEditRights] = useState(() => {
+        return user.username === uList.owner || uList.editors.includes(user.username);
+    });
 
     function getCheckStatus(status) {
         switch (status) {
@@ -24,13 +29,14 @@ const CheckListDisplay = ({ uList, updateList }) => {
     }
 
     const handleItemClick = (itemId) => {
-        const updatedItems = uList.items.map((item) =>
-            item.id === itemId
-                ? { ...item, status: item.status === '1' ? '' : '1' }
-                : item
-        );
-
-        updateList({ ...uList, items: updatedItems });
+        if(editRights){
+            const updatedItems = uList.items.map((item) =>
+                item.id === itemId
+                    ? { ...item, itemStatus: item.itemStatus === '1' ? '' : '1' }
+                    : item
+            );
+            updateList({ ...uList, items: updatedItems });
+        }
     };
 
     return (
@@ -44,13 +50,12 @@ const CheckListDisplay = ({ uList, updateList }) => {
                             border: '1px solid #ccc',
                             marginTop: '5px',
                             borderRadius: '5px',
-
                         }}
-                        onClick={() => handleItemClick(item.id)} // Add onClick handler here
+                        onClick={() => handleItemClick(item.id)}
                     >
                         <ListItemAvatar>
                             <Box>
-                                {getCheckStatus(item.status)}
+                                {getCheckStatus(item.itemStatus)}
                             </Box>
                         </ListItemAvatar>
                         <ListItemText

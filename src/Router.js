@@ -1,20 +1,18 @@
 import React, { Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import NewList from './pages/NewList';
-
-
+import { Route, Routes } from 'react-router-dom';
+import {CircularProgress} from "@mui/material";
 
 const Home = lazy(() => import('./pages/Home'));
+const NewList = lazy(() => import('./pages/NewList'));
 const Overview = lazy(() => import('./pages/Overview'));
 const ListView = lazy(() => import('./pages/ViewList'));
 const Profile = lazy(() => import('./pages/Profile'));
-
+const Admin = lazy(() => import('./pages/Admin'))
 
 
 const AppRouter = () => (
 
-
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div><CircularProgress/></div>}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/overview" element={<Overview />} />

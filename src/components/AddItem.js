@@ -50,7 +50,7 @@ const AddItem = ({uList, updateList}) => {
                 />
                 <Button
                     onClick={addToList}
-                    variant="contained"
+                    variant="outlined"
                     sx={{
                         borderTopLeftRadius: 0,
                         borderBottomLeftRadius: 0,

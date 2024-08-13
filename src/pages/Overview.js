@@ -5,13 +5,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
-import ListAltIcon from '@mui/icons-material/ListAlt';
+import ListAltIcon from '@mui/icons-material/ListAltTwoTone';
 import PersonIcon from '@mui/icons-material/Person';
 import {Typography, CircularProgress, ToggleButtonGroup, ToggleButton, Icon} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
-import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheckTwoTone';
 const apiCaller = new ApiCaller();
 
 export default function InteractiveList() {
@@ -145,10 +145,14 @@ export default function InteractiveList() {
                                     primary={list.name}
                                     secondary={list.desc}
                                 />
-                                {!ownsList(list)? (<Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                {!ownsList(list)? (
+                                    <Box sx={{  color: '#888', display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
                                     <PersonIcon />
-                                    <Typography sx={{ ml: 1 }}>{list.owner}</Typography>
-                                </Box>): (<Box><Icon></Icon></Box>)}
+                                    <Typography >{list.owner}</Typography>
+                                </Box>
+                                ): (
+                                    <Box><Icon></Icon></Box>
+                                )}
 
                             </ListItem>
                         ))}

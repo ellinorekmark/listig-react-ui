@@ -58,7 +58,7 @@ const EditDialog = ({uList, updateList}) => {
         const deletedUsers = deletedEditors.concat(deletedViewers)
 
         deletedUsers.forEach(user => {
-            apiCaller.sendPost("user/removeEditor", {user: user}, loginDetails)
+            apiCaller.sendPost("list/removeUser", {user: user, listId: uList.listInfo.id}, loginDetails)
         });
         console.log("This is the updated, copy:", JSON.stringify(listCopy))
         updateList(listCopy)
@@ -73,6 +73,11 @@ const EditDialog = ({uList, updateList}) => {
 
     function updateCopy(newCopy) {
         setCopy(newCopy)
+    }
+    async function leaveList() {
+        await apiCaller.sendPost("list/removeUser", {user: user, listId: uList.listInfo.id}, loginDetails)
+        setDialog(false)
+        navigate(`/overview`);
     }
 
     return (
@@ -101,7 +106,7 @@ const EditDialog = ({uList, updateList}) => {
                     }} variant="contained">
 
                         <EditListDetails list={listCopy} updateCopy={updateCopy}></EditListDetails>
-                        {isOwner && (
+                        {isOwner ? (
                             <Accordion>
                                 <AccordionSummary id="panel-header" aria-controls="panel-content"
                                                   sx={{backgroundColor: "primary.main"}} >
@@ -114,6 +119,21 @@ const EditDialog = ({uList, updateList}) => {
                                         reversed.</Typography>
                                     <Button onClick={deleteList} variant={"contained"} sx={{padding: 2}}
                                             color={"error"} fullWidth >Delete list</Button>
+                                </AccordionDetails>
+                            </Accordion>
+                        ): (
+                            <Accordion>
+                                <AccordionSummary id="panel-header" aria-controls="panel-content"
+                                                  sx={{backgroundColor: "primary.main"}}>
+                                    <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                                        <Typography p={1} fontSize={"large"}>Leave</Typography>
+                                    </Box>
+                                </AccordionSummary>
+                                <AccordionDetails sx={{justifyContent: 'center'}}>
+                                    <Typography textAlign={'center'} p={1}>Warning: <br/>If you want to come back, the owner
+                                        will have to add you again.</Typography>
+                                    <Button onClick={leaveList} variant={"contained"} sx={{padding: 2}}
+                                            color={"error"} fullWidth>Leave list</Button>
                                 </AccordionDetails>
                             </Accordion>
                         )}

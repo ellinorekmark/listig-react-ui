@@ -1,24 +1,22 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {useParams} from 'react-router-dom';
-import {Box,  CircularProgress} from '@mui/material';
-import {AuthContext} from "../AuthContext";
+import React, { useContext, useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Box, CircularProgress, Typography } from '@mui/material';
+import { AuthContext } from "../AuthContext";
 import SockJS from "sockjs-client";
-import {Client} from "@stomp/stompjs";
-import {ApiCaller} from "../ApiCaller";
-import Typography from "@mui/material/Typography";
-
+import { Client } from "@stomp/stompjs";
+import { ApiCaller } from "../ApiCaller";
 import ListDisplay from "../components/ListDisplay";
+import { BASE_URL_SOCKET } from "../constants";
 
 const apiCaller = new ApiCaller();
 
 const ViewList = () => {
-    const {id} = useParams();
-
-    const {loginDetails} = useContext(AuthContext);
+    const { id } = useParams();
+    const { loginDetails } = useContext(AuthContext);
     const [loading, setLoading] = useState(true);
     const [uList, setList] = useState(null);
     const [stompClient, setStompClient] = useState(null);
-
+    const [fetchError, setFetchError] = useState(false);
 
     useEffect(() => {
         const fetchList = async () => {
@@ -26,41 +24,28 @@ const ViewList = () => {
                 const data = await apiCaller.sendGet(`list/${id}`, loginDetails);
                 setList(data);
             } catch (error) {
-                console.error("Error fetching data", error);
+                setFetchError(true);
             } finally {
                 setLoading(false);
             }
         };
         fetchList();
 
-        const socket = new SockJS('http://localhost:8080/ws');
+        const socket = new SockJS(BASE_URL_SOCKET);
         const client = new Client({
             webSocketFactory: () => socket,
             onConnect: () => {
                 console.log('Connected to WebSocket');
                 client.subscribe(`/topic/list/${id}`, (message) => {
-                    const updatedItem = JSON.parse(message.body);
-                    setList(prevList => ({
-                        ...prevList,
-                        items: prevList.items.map(item =>
-                            item.id === updatedItem.id ? updatedItem : item
-                        )
-                    }));
+                    const updatedList = JSON.parse(message.body);
+                    setList(updatedList);
                 });
             },
             onStompError: (frame) => {
                 console.error('Broker reported error: ' + frame.headers['message']);
                 console.error('Additional details: ' + frame.body);
             }
-
         });
-        socket.onclose = function (event) {
-            console.error('WebSocket is closed now.', event);
-        };
-
-        socket.onerror = function (event) {
-            console.error('WebSocket error observed:', event);
-        };
 
         client.activate();
         setStompClient(client);
@@ -70,14 +55,16 @@ const ViewList = () => {
                 client.deactivate();
             }
         };
-    }, [loginDetails]);
+    }, [id, loginDetails]);
 
     const updateList = (newList) => {
-
-        setList(newList)
+        setList(newList);
 
         if (stompClient && stompClient.connected) {
-            stompClient.publish(`/app/list/${id}`, {}, JSON.stringify(newList));
+            stompClient.publish({
+                destination: `/app/list/${id}`,
+                body: JSON.stringify(newList)
+            });
             console.log("Sent update to WebSocket");
         }
     };
@@ -86,16 +73,20 @@ const ViewList = () => {
         <>
             {loading ? (
                 <Box>
-                    <CircularProgress/>
+                    <CircularProgress />
                     <Typography>Loading List</Typography>
                 </Box>
             ) : (
-
-                <ListDisplay uList={uList} updateList={updateList}></ListDisplay>
-
+                <>
+                    {fetchError ? (
+                        <Typography>Unable to load list.</Typography>
+                    ) : (
+                        <ListDisplay uList={uList} updateList={updateList} />
+                    )}
+                </>
             )}
         </>
     );
 };
-export default ViewList;
 
+export default ViewList;

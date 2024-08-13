@@ -5,6 +5,8 @@ import AppRouter from './Router';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 function App() {
+
+
     return (
 
         <div className="App">
@@ -12,8 +14,9 @@ function App() {
                 <AppRouter/>
                 <Nav/>
             </Router>
-            <br/><br/><br/>
+            <br/><br/><br/><br/>
         </div>
+
     );
 }
 
