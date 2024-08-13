@@ -19,6 +19,7 @@ export class ApiCaller {
             body: JSON.stringify(data)
         })
         if (!response.ok) {
+            console.log(await response.json())
             const errorResponse = await response.json()
             throw new Error(errorResponse)
         }

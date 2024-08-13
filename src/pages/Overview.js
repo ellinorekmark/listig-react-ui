@@ -49,7 +49,7 @@ export default function InteractiveList() {
     }, [loginDetails]);
 
     function goToList(id) {
-        navigate(`/list/${id}`);
+        navigate(`/web/list/${id}`);
     }
 
     function filterList(option) {

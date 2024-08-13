@@ -68,16 +68,16 @@ const EditDialog = ({uList, updateList}) => {
     async function deleteList() {
         await apiCaller.sendDelete("list", uList.listInfo.id, loginDetails)
         setDialog(false)
-        navigate(`/overview`);
+        navigate(`/web/overview`);
     }
 
     function updateCopy(newCopy) {
         setCopy(newCopy)
     }
     async function leaveList() {
-        await apiCaller.sendPost("list/removeUser", {user: user, listId: uList.listInfo.id}, loginDetails)
+        await apiCaller.sendPost("list/removeUser", {user: user.username, listId: uList.listInfo.id}, loginDetails)
         setDialog(false)
-        navigate(`/overview`);
+        navigate(`/web/overview`);
     }
 
     return (

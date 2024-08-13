@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {AuthContext} from "../AuthContext";
 import {
     Accordion,
@@ -17,16 +17,20 @@ const apiCaller = new ApiCaller();
 
 
 const Home = () => {
-    const {login, createAccount} = useContext(AuthContext);
+    const {login, createAccount, user} = useContext(AuthContext);
     const [loading, setLoading] = useState(false);
     const [nameTaken, setNameTaken] = useState(false);
 
     const navigate = useNavigate();
-
+    useEffect(() => {
+        if(user!== null){
+            navigate("/web/overview");
+        }
+    },[user])
     const handleLogin = async () => {
         setLoading(true);
         if (await login(username, password) === true) {
-            navigate(`/overview`);
+            navigate(`/web/overview`);
         } else {
             setLoading(false);
             alert("Unable to log in");
@@ -47,7 +51,7 @@ const Home = () => {
             });
             if (account === true) {
                 console.log("account created")
-                navigate(`/overview`);
+                navigate(`/web/overview`);
             } else {
                 setLoading(false);
                 alert("Unable to create account");

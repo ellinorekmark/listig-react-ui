@@ -24,22 +24,22 @@ export default function SimpleBottomNavigation() {
     }, [user]);
 
     const goToOverviewPage = () => {
-        navigate('/overview');
+        navigate('/web/overview');
     }
 
     const goToNewListPage = () => {
-        navigate('/newlist');
+        navigate('/web/newlist');
     };
 
     const goToProfilePage = () => {
-        navigate('/profile');
+        navigate('/web/profile');
     };
     const goToLoginPage = () => {
-        navigate('/');
+        navigate('/web/');
     };
 
     const goToAboutPage = () => {
-        navigate('/about');
+        navigate('/web/about');
     };
 
 

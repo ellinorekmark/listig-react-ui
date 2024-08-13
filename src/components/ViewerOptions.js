@@ -36,9 +36,9 @@ const ViewerOptions = ({uList}) => {
     }
 
     async function leaveList() {
-        await apiCaller.sendPost("list/removeUser", {user: user, listId: uList.listInfo.id}, loginDetails)
+        await apiCaller.sendPost("list/removeUser", {user: user.username, listId: uList.listInfo.id}, loginDetails)
         setDialog(false)
-        navigate(`/overview`);
+        navigate(`/web/overview`);
     }
 
 

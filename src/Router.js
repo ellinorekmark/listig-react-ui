@@ -16,12 +16,12 @@ const AppRouter = () => (
     <Suspense fallback={<div><CircularProgress/></div>}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/overview" element={<Overview />} />
-        <Route path="/list/:id" element={<ListView />} />
-        <Route path="/newList" element={<NewList />} />
-        <Route path="/profile" element={<Profile/>} />
-        <Route path="/about" element={<About/>} />
-        <Route path="/admin" element={<Admin/>} />
+        <Route path="/web/overview" element={<Overview />} />
+        <Route path="/web/list/:id" element={<ListView />} />
+        <Route path="/web/newList" element={<NewList />} />
+        <Route path="/web/profile" element={<Profile/>} />
+        <Route path="/web/about" element={<About/>} />
+        <Route path="/web/admin" element={<Admin/>} />
         <Route path="*" element={() => <div>404 Not Found</div>} />
       </Routes>
     </Suspense>
