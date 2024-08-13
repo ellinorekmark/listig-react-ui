@@ -6,7 +6,6 @@ import ListAlt from '@mui/icons-material/ListAltTwoTone';
 import Add from '@mui/icons-material/AddTwoTone';
 import Person from '@mui/icons-material/PersonTwoTone';
 import InfoIcon from '@mui/icons-material/InfoTwoTone';
-import PhotoLibraryIcon from '@mui/icons-material/PhotoLibraryTwoTone';
 import {useNavigate} from 'react-router-dom';
 import {AuthContext} from "./AuthContext";
 
@@ -38,11 +37,9 @@ export default function SimpleBottomNavigation() {
     const goToLoginPage = () => {
         navigate('/');
     };
-    const goToExamplePage = () => {
-        navigate('/');
-    };
+
     const goToAboutPage = () => {
-        navigate('/');
+        navigate('/about');
     };
 
 
@@ -73,7 +70,6 @@ export default function SimpleBottomNavigation() {
                     >
                         <BottomNavigationAction label="About" icon={<InfoIcon/>} onClick={goToAboutPage}/>
                         <BottomNavigationAction label="Login" icon={<Person/>} onClick={goToLoginPage}/>
-                        <BottomNavigationAction label="Examples" icon={<PhotoLibraryIcon/>} onClick={goToExamplePage}/>
                     </BottomNavigation>
                     )}
 
