@@ -44,8 +44,8 @@ const ViewerOptions = ({uList}) => {
 
     return (
         <>
-            <IconButton variant="outlined" onClick={openDialog}>
-                <InfoIcon sx={{p: 1}}/>
+            <IconButton variant="outlined" onClick={openDialog} sx={{color: 'secondary.main'}}>
+                <InfoIcon />
             </IconButton>
 
             <Dialog
@@ -61,7 +61,8 @@ const ViewerOptions = ({uList}) => {
                 <DialogContent>
                     <Box maxWidth={400} sx={{
                         mx: 'auto',
-                        border: '1px solid #ccc',
+                        border: '1px solid ',
+                        borderColor: 'primary.darker',
                         marginTop: '5px',
                         borderRadius: '5px',
                     }} variant="contained">

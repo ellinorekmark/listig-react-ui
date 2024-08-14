@@ -12,6 +12,7 @@ import {useNavigate} from 'react-router-dom';
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheckTwoTone';
+import PageHeader from "../components/PageHeader";
 const apiCaller = new ApiCaller();
 
 export default function InteractiveList() {
@@ -19,7 +20,6 @@ export default function InteractiveList() {
     const [overviewData, setOverviewData] = useState([]);
     const [activeFiltered, setFilteredList] = useState([])
     const [loading, setLoading] = useState(true);
-    const [noDataFetch, setData] = useState(true);
 
     const navigate = useNavigate();
 
@@ -36,7 +36,6 @@ export default function InteractiveList() {
                 const data = await apiCaller.sendGet("list/all", loginDetails);
                 setOverviewData(data);
                 setFilteredList(data);
-                setData(false);
             } catch (error) {
                 console.error("Error fetching data", error);
             } finally {
@@ -78,9 +77,9 @@ export default function InteractiveList() {
     function getListIcon(type) {
         switch (type) {
             case 'CHECK':
-                return <LibraryAddCheckIcon />;
+                return <LibraryAddCheckIcon sx={{color: "primary.darker"}}/>;
             default:
-                return <ListAltIcon />;
+                return <ListAltIcon sx={{color: "primary.darker"}}/>;
         }
     }
 
@@ -91,12 +90,7 @@ export default function InteractiveList() {
     return (
         <>
             <Box maxWidth={750} sx={{ mx: 'auto' }}>
-                <Box sx={{ paddingTop: 2 }}>
-                    <Typography fontSize={"xx-large"} sx={{ fontFamily: 'Garamond' }}>
-                        Lists
-                    </Typography>
-                    <br />
-                </Box>
+                <PageHeader title={"Lists"}></PageHeader>
                 <Box sx={{ paddingBottom: 2 }}>
                     <ToggleButtonGroup
                         color="primary"
@@ -131,13 +125,14 @@ export default function InteractiveList() {
                                 onClick={() => goToList(list.id)}
                                 sx={{
                                     cursor: 'pointer',
-                                    border: '1px solid #ccc',
+                                    border: '1px solid ',
+                                    borderColor: 'primary.darker',
                                     marginTop: '5px',
                                     borderRadius: '5px',
                                 }}
                             >
                                 <ListItemAvatar>
-                                    <Avatar>
+                                    <Avatar sx={{backgroundColor: "primary.lighter"}}>
                                         {getListIcon(list.type)}
                                     </Avatar>
                                 </ListItemAvatar>
@@ -146,7 +141,7 @@ export default function InteractiveList() {
                                     secondary={list.desc}
                                 />
                                 {!ownsList(list)? (
-                                    <Box sx={{  color: '#888', display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
+                                    <Box sx={{  color: 'primary.lighter', display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
                                     <PersonIcon />
                                     <Typography >{list.owner}</Typography>
                                 </Box>

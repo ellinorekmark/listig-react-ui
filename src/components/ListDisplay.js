@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 import {
-    Box, IconButton} from '@mui/material';
+    Box, IconButton
+} from '@mui/material';
 import Typography from "@mui/material/Typography";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
@@ -12,6 +13,7 @@ import {AuthContext} from "../AuthContext";
 import EditItems from "./EditItems";
 import AddItem from "./AddItem";
 import ViewerOptions from "./ViewerOptions";
+import PageHeader from "./PageHeader";
 
 
 const ListDisplay = ({uList, updateList}) => {
@@ -24,6 +26,7 @@ const ListDisplay = ({uList, updateList}) => {
     const toggleLocked = () => {
         setLocked(!locked);
     };
+
     function getListType(type) {
         switch (type.listInfo.type) {
             case 'CHECK':
@@ -55,13 +58,9 @@ const ListDisplay = ({uList, updateList}) => {
 
 
                 <Box>
-                    <Box sx={{marginTop: 2}}>
-                        <Typography fontSize={"xx-large"} sx={{fontFamily: 'Garamond'}}>
-                            {uList.listInfo.listName}
-                        </Typography>
-                        <br/>
-                    </Box>
-                    <Box sx={{display: 'grid', border: '1px solid #ccc', borderRadius: 2, m: 2}}>
+                    <PageHeader title={uList.listInfo.listName}></PageHeader>
+                    <Box sx={{display: 'grid', border: '1px solid ',
+                        borderColor: 'primary.darker', borderRadius: 2, m: 2}}>
                         <Box sx={{marginBottom: 2, gridRow: '1', gridColumn: "1 / 2", m: 1}}>
                             <Typography fontSize={"large"} sx={{fontFamily: 'Garamond', textAlign: 'left'}}>
                                 {uList.listInfo.listDesc}
@@ -70,10 +69,11 @@ const ListDisplay = ({uList, updateList}) => {
                         </Box>
                         <Box sx={{gridRow: '1', gridColumn: '3'}}>
                             <IconButton variant="outlined" onClick={toggleLocked}>
-                                {locked ? <LockIcon sx={{p: 1}}/> : <LockOpenIcon sx={{cursor: 'pointer', p: 1}}/>}
+                                {locked ? <LockIcon sx={{color: 'secondary.main'}} /> : <LockOpenIcon sx={{color: 'secondary.main'}}/>}
                             </IconButton>
 
-                            {editRights ? (<EditDialog uList={uList} updateList={updateList}></EditDialog>) : (<ViewerOptions uList={uList}></ViewerOptions>)}
+                            {editRights ? (<EditDialog uList={uList} updateList={updateList}></EditDialog>) : (
+                                <ViewerOptions uList={uList}></ViewerOptions>)}
 
                         </Box>
                         <Typography sx={{gridRow: '2', gridColumn: '1 / 3', textAlign: 'left', p: 1}}>
@@ -81,14 +81,14 @@ const ListDisplay = ({uList, updateList}) => {
                         </Typography>
                     </Box>
                 </Box>
-            {locked ? (
-                <Box>{getListType(uList)}</Box>
-            ) : (
-                <EditItems uList={uList} updateList={updateList}/>
-            )}
+                {locked ? (
+                    <Box>{getListType(uList)}</Box>
+                ) : (
+                    <EditItems uList={uList} updateList={updateList}/>
+                )}
 
                 {editRights && (<AddItem uList={uList} updateList={updateList}></AddItem>)}
-        </Box>
+            </Box>
         </>
     );
 };

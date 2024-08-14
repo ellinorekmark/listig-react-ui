@@ -53,7 +53,8 @@ const EditItems = ({uList, updateList}) => {
                                                 {...draggableProvider.dragHandleProps}
                                                 sx={{
                                                     cursor: 'pointer',
-                                                    border: '1px solid #ccc',
+                                                    border: '1px solid ',
+                                                    borderColor: 'primary.darker',
                                                     marginTop: '5px',
                                                     borderRadius: '5px',
                                                     display: 'flex',

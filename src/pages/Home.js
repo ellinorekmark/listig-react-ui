@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import {useNavigate} from "react-router-dom";
 import {ApiCaller} from "../ApiCaller";
+import PageHeader from "../components/PageHeader";
 
 const apiCaller = new ApiCaller();
 
@@ -73,9 +74,7 @@ const Home = () => {
 
     return (
         <>
-            <Typography fontSize={"xx-large"} sx={{fontFamily: 'Garamond'}}>
-                Listig
-            </Typography>
+            <PageHeader title={"Listig"}></PageHeader>
 
             <Box sx={{
                 width: 300,

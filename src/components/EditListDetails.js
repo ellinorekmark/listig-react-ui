@@ -93,7 +93,7 @@ const EditListDetails = ({list, updateCopy}) => {
                     </FormControl>
                 </AccordionDetails>
             </Accordion>
-            {list.owner === user ? (<HandleUsers list={list} updateCopy={updateCopy}/>) : (
+            {list.owner === user.username ? (<HandleUsers list={list} updateCopy={updateCopy}/>) : (
                 <Accordion>
                     <AccordionSummary
                         id="panel-header"

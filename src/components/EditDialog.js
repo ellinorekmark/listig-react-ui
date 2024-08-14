@@ -17,6 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
 import {useNavigate} from "react-router-dom";
+import PageHeader from "./PageHeader";
 
 const apiCaller = new ApiCaller()
 const EditDialog = ({uList, updateList}) => {
@@ -82,8 +83,8 @@ const EditDialog = ({uList, updateList}) => {
 
     return (
         <>
-            <IconButton variant="outlined" onClick={openDialog}>
-                <EditIcon sx={{p: 1}}/>
+            <IconButton variant="outlined" onClick={openDialog} sx={{color: 'secondary.main'}}>
+                <EditIcon />
             </IconButton>
 
             <Dialog
@@ -91,16 +92,15 @@ const EditDialog = ({uList, updateList}) => {
                 open={dialog}
                 onClose={closeDialog}
             >
-                <DialogTitle><Box sx={{paddingTop: 2}}>
-                    <Typography fontSize={"xx-large"} sx={{fontFamily: 'Garamond', textAlign: 'center'}}>
-                        Edit List
-                    </Typography>
-                </Box></DialogTitle>
+                <DialogTitle textAlign={'center'}>
+                    <PageHeader title={"Edit List"}></PageHeader>
+                </DialogTitle>
                 <DialogContent>
                     <Box maxWidth={400} sx={{
                         mx: 'auto',
                         cursor: 'pointer',
-                        border: '1px solid #ccc',
+                        border: '1px solid ',
+                        borderColor: 'primary.darker',
                         marginTop: '5px',
                         borderRadius: '5px',
                     }} variant="contained">
@@ -118,13 +118,13 @@ const EditDialog = ({uList, updateList}) => {
                                     <Typography textAlign={'center'} p={1}>Warning: <br/>Deleting a list cannot be
                                         reversed.</Typography>
                                     <Button onClick={deleteList} variant={"contained"} sx={{padding: 2}}
-                                            color={"error"} fullWidth >Delete list</Button>
+                                            color={"warning"} fullWidth >Delete list</Button>
                                 </AccordionDetails>
                             </Accordion>
                         ): (
                             <Accordion>
                                 <AccordionSummary id="panel-header" aria-controls="panel-content"
-                                                  sx={{backgroundColor: "primary.main"}}>
+                                                  sx={{backgroundColor: "primary.darker"}}>
                                     <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
                                         <Typography p={1} fontSize={"large"}>Leave</Typography>
                                     </Box>
@@ -133,7 +133,7 @@ const EditDialog = ({uList, updateList}) => {
                                     <Typography textAlign={'center'} p={1}>Warning: <br/>If you want to come back, the owner
                                         will have to add you again.</Typography>
                                     <Button onClick={leaveList} variant={"contained"} sx={{padding: 2}}
-                                            color={"error"} fullWidth>Leave list</Button>
+                                            color={"warning"} fullWidth>Leave list</Button>
                                 </AccordionDetails>
                             </Accordion>
                         )}

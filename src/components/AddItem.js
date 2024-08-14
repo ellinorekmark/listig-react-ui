@@ -35,7 +35,7 @@ const AddItem = ({uList, updateList}) => {
                     value={newItem}
                     onChange={(e) => setItem(e.target.value)}
                     fullWidth
-                    sx={{height: '56px'}}
+                    sx={{height: '56px',}}
                     InputProps={{
                         sx: {
                             borderTopRightRadius: 0,
@@ -45,6 +45,8 @@ const AddItem = ({uList, updateList}) => {
                                 borderBottomRightRadius: 0,
                             },
                             height: '56px',
+
+                            borderColor: 'primary.darker',
                         }
                     }}
                 />

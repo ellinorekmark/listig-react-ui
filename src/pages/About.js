@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from "@mui/material/Box";
 import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
+import PageHeader from "../components/PageHeader";
 
 const About = () => {
 
@@ -11,9 +12,7 @@ const About = () => {
                 <Box sx={{
                     padding: 2, border: '1px solid #ccc', borderRadius: '5px',
                 }}>
-                    <Typography fontSize={"xx-large"} sx={{fontFamily: 'Garamond'}}>
-                        About Listig
-                    </Typography>
+                    <PageHeader title={"About"}></PageHeader>
                     <br/>
                     <Typography>
                         Listig is a hobby project by Ellinor Ekmark started Spring 2024. <br/><br/>

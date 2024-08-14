@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import {AuthContext} from "../AuthContext";
 import {ApiCaller} from "../ApiCaller";
 import {useNavigate} from "react-router-dom";
+import PageHeader from "../components/PageHeader";
 
 const apiCaller = new ApiCaller()
 
@@ -60,18 +61,15 @@ const NewList = () => {
         <>
             <Box maxWidth={750} sx={{mx: 'auto'}} variant="contained">
 
-                <Box sx={{paddingTop: 2}}>
-                    <Typography fontSize={"xx-large"} sx={{fontFamily: 'Garamond'}}>
-                        Create a List
-                    </Typography>
-                </Box>
+                <PageHeader title={"New List"}></PageHeader>
                 <br/>
                 <Box>
                     <Box maxWidth={300} sx={{
                         mx: 'auto',
                         mt: 2,
                         p: 2,
-                        border: '1px solid #ccc',
+                        border: '1px solid ',
+                        borderColor: 'primary.darker',
                     }}>
                         <TextField
                             inputProps={{maxLength: 100}}

@@ -22,9 +22,9 @@ const CheckListDisplay = ({ uList, updateList }) => {
     function getCheckStatus(status) {
         switch (status) {
             case '1':
-                return <CheckBoxIcon />;
+                return <CheckBoxIcon sx={{color:'secondary.main'}}/>;
             default:
-                return <CheckBoxOutlineBlankIcon />;
+                return <CheckBoxOutlineBlankIcon sx={{color:'secondary.main'}} />;
         }
     }
 
@@ -47,7 +47,8 @@ const CheckListDisplay = ({ uList, updateList }) => {
                         key={item.id}
                         sx={{
                             cursor: 'pointer',
-                            border: '1px solid #ccc',
+                            border: '1px solid ',
+                            borderColor: 'primary.darker',
                             marginTop: '5px',
                             borderRadius: '5px',
                         }}

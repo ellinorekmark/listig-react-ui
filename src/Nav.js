@@ -35,7 +35,7 @@ export default function SimpleBottomNavigation() {
         navigate('/web/profile');
     };
     const goToLoginPage = () => {
-        navigate('/web/');
+        navigate('/');
     };
 
     const goToAboutPage = () => {
@@ -49,7 +49,8 @@ export default function SimpleBottomNavigation() {
 
             {loggedIn ? (
                 <BottomNavigation
-                    sx={{ borderTop: '1px solid #ccc', boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.15)', paddingTop: 1}}
+                    sx={{ borderTop: '1px solid ',
+                        borderColor: 'primary.darker', boxShadow: '0 -2px 5px rgba(0, 0, 0, 0.15)', paddingTop: 1}}
                     showLabels
                     value={value}
                     onChange={(event, newValue) => {
