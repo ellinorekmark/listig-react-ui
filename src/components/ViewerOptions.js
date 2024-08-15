@@ -83,8 +83,7 @@ const ViewerOptions = ({uList}) => {
                                         color={"error"} fullWidth>Leave list</Button>
                             </AccordionDetails>
                         </Accordion>
-
-
+                        
                     </Box>
                 </DialogContent>
                 <DialogActions sx={{justifyContent: 'center'}}>

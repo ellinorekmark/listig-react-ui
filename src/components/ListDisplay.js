@@ -59,8 +59,10 @@ const ListDisplay = ({uList, updateList}) => {
 
                 <Box>
                     <PageHeader title={uList.listInfo.listName}></PageHeader>
-                    <Box sx={{display: 'grid', border: '1px solid ',
-                        borderColor: 'primary.darker', borderRadius: 2, m: 2}}>
+                    <Box sx={{
+                        display: 'grid', border: '1px solid ',
+                        borderColor: 'primary.darker', borderRadius: 2, m: 2
+                    }}>
                         <Box sx={{marginBottom: 2, gridRow: '1', gridColumn: "1 / 2", m: 1}}>
                             <Typography fontSize={"large"} sx={{fontFamily: 'Garamond', textAlign: 'left'}}>
                                 {uList.listInfo.listDesc}
@@ -68,11 +70,17 @@ const ListDisplay = ({uList, updateList}) => {
                             </Typography>
                         </Box>
                         <Box sx={{gridRow: '1', gridColumn: '3'}}>
-                            <IconButton variant="outlined" onClick={toggleLocked}>
-                                {locked ? <LockIcon sx={{color: 'secondary.main'}} /> : <LockOpenIcon sx={{color: 'secondary.main'}}/>}
-                            </IconButton>
 
-                            {editRights ? (<EditDialog uList={uList} updateList={updateList}></EditDialog>) : (
+
+                            {editRights ? (
+                                <>
+                                    <EditDialog uList={uList} updateList={updateList}></EditDialog>
+                                    <IconButton variant="outlined" onClick={toggleLocked}>
+                                        {locked ? <LockIcon sx={{color: 'secondary.main'}}/> :
+                                            <LockOpenIcon sx={{color: 'secondary.main'}}/>}
+                                    </IconButton>
+                                </>
+                            ) : (
                                 <ViewerOptions uList={uList}></ViewerOptions>)}
 
                         </Box>

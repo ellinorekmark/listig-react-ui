@@ -18,33 +18,35 @@ const apiCaller = new ApiCaller();
 export default function InteractiveList() {
     const {loginDetails, user} = useContext(AuthContext);
     const [overviewData, setOverviewData] = useState([]);
-    const [activeFiltered, setFilteredList] = useState([])
+    const [activeFiltered, setFilteredList] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
-
     const [alignment, setAlignment] = React.useState('all');
 
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
         filterList(newAlignment);
     };
-    useEffect(() => {
 
+    const sortListByLastEdit = (data) => {
+        return data.sort((a, b) => new Date(b.lastEdit) - new Date(a.lastEdit));
+    };
+
+    useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await apiCaller.sendGet("list/all", loginDetails);
-                setOverviewData(data);
-                setFilteredList(data);
+                const sortedData = sortListByLastEdit(data);
+                setOverviewData(sortedData);
+                setFilteredList(sortedData);
             } catch (error) {
                 console.error("Error fetching data", error);
             } finally {
                 setLoading(false);
             }
         };
-
         fetchData();
-
     }, [loginDetails]);
 
     function goToList(id) {
@@ -52,19 +54,21 @@ export default function InteractiveList() {
     }
 
     function filterList(option) {
+        let filteredData = [];
         switch (option) {
             case "all":
-                setFilteredList(overviewData);
+                filteredData = overviewData;
                 break;
-
             case "private":
-                setFilteredList(overviewData.filter(privateList));
+                filteredData = overviewData.filter(privateList);
                 break;
-
             case "shared":
-                setFilteredList(overviewData.filter(sharedList));
+                filteredData = overviewData.filter(sharedList);
+                break;
+            default:
                 break;
         }
+        setFilteredList(sortListByLastEdit(filteredData));
     }
 
     function privateList(l) {
@@ -74,6 +78,7 @@ export default function InteractiveList() {
     function sharedList(l) {
         return l.users !== 1;
     }
+
     function getListIcon(type) {
         switch (type) {
             case 'CHECK':
@@ -82,7 +87,6 @@ export default function InteractiveList() {
                 return <ListAltIcon sx={{color: "primary.darker"}}/>;
         }
     }
-
 
     function ownsList(l){
         return l.owner === user.username;
@@ -142,9 +146,9 @@ export default function InteractiveList() {
                                 />
                                 {!ownsList(list)? (
                                     <Box sx={{  color: 'primary.lighter', display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
-                                    <PersonIcon />
-                                    <Typography >{list.owner}</Typography>
-                                </Box>
+                                        <PersonIcon />
+                                        <Typography >{list.owner}</Typography>
+                                    </Box>
                                 ): (
                                     <Box><Icon></Icon></Box>
                                 )}
@@ -155,7 +159,5 @@ export default function InteractiveList() {
                 )}
             </Box>
         </>
-
-
-);
+    );
 }

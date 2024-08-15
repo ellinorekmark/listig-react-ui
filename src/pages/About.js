@@ -10,7 +10,8 @@ const About = () => {
         <>
             <Box maxWidth={750} sx={{mx: 'auto'}}>
                 <Box sx={{
-                    padding: 2, border: '1px solid #ccc', borderRadius: '5px',
+                    padding: 2, border: '1px solid ',
+                    borderColor: 'primary.darker', borderRadius: '5px',
                 }}>
                     <PageHeader title={"About"}></PageHeader>
                     <br/>

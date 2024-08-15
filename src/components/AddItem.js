@@ -28,7 +28,7 @@ const AddItem = ({uList, updateList}) => {
 
             <Box sx={{display: 'flex', alignItems: 'center', mt: 2}}>
                 <TextField
-                    inputProps={{maxLength: 33}}
+                    inputProps={{maxLength: 200}}
                     id="new-item"
                     label="New Item"
                     variant="outlined"
