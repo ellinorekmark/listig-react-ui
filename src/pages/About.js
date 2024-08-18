@@ -1,7 +1,8 @@
 import React from 'react';
 import Box from "@mui/material/Box";
-import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, ImageList, ImageListItem, Typography} from "@mui/material";
 import PageHeader from "../components/PageHeader";
+
 
 const About = () => {
 
@@ -74,6 +75,52 @@ const About = () => {
                             This application uses both a <strong>REST API</strong> and <strong>Websockets</strong>. REST
                             API for most data fetching, but websockets are used to view lists to send and receive
                             immediate updates, allowing users to edit lists simultaneously.
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion>
+                        <AccordionSummary>
+                            <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                                <Typography fontSize={"large"} sx={{
+                                    fontFamily: 'Garamond',
+                                    color: 'primary.main'
+                                }}><strong>Screenshots</strong></Typography>
+                            </Box>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <ImageList display={'flex'}>
+                                <ImageListItem minWidth={"300px"} maxWidth={"500px"}>
+                                    <img src="/screenshot1.jpg" alt="Lists overview page"/>
+                                </ImageListItem>
+                                <ImageListItem>
+                                    <img src="/screenshot2.jpg" alt="New list page"/>
+                                </ImageListItem>
+                                <ImageListItem>
+                                <img src="/screenshot3.jpg" alt="Manage users on list"/>
+                            </ImageListItem>
+                                <ImageListItem>
+                                    <img src="/screenshot4.jpg" alt="Lessons learned"/>
+                                </ImageListItem>
+                            </ImageList>
+
+
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion>
+                        <AccordionSummary>
+                            <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                                <Typography fontSize={"large"} sx={{
+                                    fontFamily: 'Garamond',
+                                    color: 'primary.main'
+                                }}><strong>Video Demo</strong></Typography>
+                            </Box>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Box>
+                                <video width="200" controls>
+                                    <source src="/demo.mp4" type="video/mp4" />
+                                    Your browser does not support the video tag.
+                                </video>
+                            </Box>
                         </AccordionDetails>
                     </Accordion>
                 </Box>

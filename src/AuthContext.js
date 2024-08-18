@@ -20,6 +20,15 @@ const AuthProvider = ({ children }) => {
         }
     }, []);
 
+    function saveUser(username, password, res) {
+        const userLoginData = btoa(username + ':' + password)
+        setLogin(userLoginData)
+        const user = res
+        setUser(user)
+        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('loginDetails', userLoginData);
+    }
+
     const login = async (username, password) => {
         const response = await fetch(baseurl + 'user', {
             method: 'GET',
@@ -33,12 +42,7 @@ const AuthProvider = ({ children }) => {
         if (!response.ok) {
             return false
         }
-        const userLoginData = btoa(username + ':' + password)
-        setLogin(userLoginData)
-        const user = res
-        setUser(user)
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('loginDetails', userLoginData);
+        saveUser(username, password, res);
         return true;
     };
 
@@ -73,7 +77,7 @@ const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, loginDetails, createAccount }}>
+        <AuthContext.Provider value={{ user, login, logout, loginDetails, saveUser, createAccount }}>
             {children}
         </AuthContext.Provider>
     );

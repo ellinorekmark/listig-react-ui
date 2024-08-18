@@ -25,18 +25,30 @@ const HandleUsers = ({list, updateCopy}) => {
     const viewers = list.viewers || [];
 
     const handleRoleChange = (user, newRole) => {
+        let newEditors = [...editors];
+        let newViewers = [...viewers];
+
+        if (newRole === "EDITOR") {
+            newViewers = newViewers.filter(viewer => viewer !== user);
+            if (!newEditors.includes(user)) {
+                newEditors.push(user);
+            }
+        } else if (newRole === "VIEWER") {
+            newEditors = newEditors.filter(editor => editor !== user);
+            if (!newViewers.includes(user)) {
+                newViewers.push(user);
+            }
+        }
+
         const newList = {
             ...list,
-            editors: newRole === "EDITOR"
-                ? [...editors, user].filter(u => !viewers.includes(u))
-                : editors.filter((editor) => editor !== user),
-            viewers: newRole === "VIEWER"
-                ? [...viewers, user].filter(u => !editors.includes(u))
-                : viewers.filter((viewer) => viewer !== user),
+            editors: newEditors,
+            viewers: newViewers,
         };
-        console.log("updating users in HandleUsers, ", JSON.stringify(newList));
+
         updateCopy(newList);
     };
+
 
     const handleRemoveUser = (user) => {
         const newList = {
@@ -160,7 +172,7 @@ const HandleUsers = ({list, updateCopy}) => {
                     <Box sx={{display: "flex", justifyContent: "space-between", width: "100%", maxWidth: 350}}>
                         <FormControl sx={{width: "48%"}}>
                             <Select
-                                defaultValue={"VIEWER"}
+                                value={newUserRole}
                                 onChange={handleNewUserRoleChange}
                                 inputProps={{
                                     name: "role",
@@ -168,8 +180,8 @@ const HandleUsers = ({list, updateCopy}) => {
                                 }}
                                 sx={{width: "100%"}}
                             >
-                                <option value={"VIEWER"}>Viewer</option>
-                                <option value={"EDITOR"}>Editor</option>
+                                <MenuItem value={"VIEWER"}>Viewer</MenuItem>
+                                <MenuItem value={"EDITOR"}>Editor</MenuItem>
                             </Select>
                         </FormControl>
                         {userCheckLoading ? (
@@ -179,10 +191,9 @@ const HandleUsers = ({list, updateCopy}) => {
                                 Add User
                             </Button>
                         )}
-
                     </Box>
                     <br/>
-                    <Typography  color={"error"}> {errorMessage}</Typography>
+                    <Typography color={"error"}> {errorMessage}</Typography>
                 </AccordionDetails>
             </Accordion>
         </>

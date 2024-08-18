@@ -8,6 +8,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import PageHeader from "../components/PageHeader";
 import { ThemeContext } from "../ThemeContext";
+import NewPassword from "../components/NewPassword";
 
 const Profile = () => {
     const { user, logout } = useContext(AuthContext);
@@ -36,6 +37,18 @@ const Profile = () => {
             <Box maxWidth={300} sx={{ mx: 'auto' }}>
                 <Box sx={{ paddingTop: 2 }} >
                     <PageHeader title={"Profile"}></PageHeader>
+
+                    <Button
+                        variant="outlined"
+                        sx={{ mt: 1, p: 1 }}
+                        onClick={toggleTheme}
+                    >
+                        {theme === "light" ? (
+                            <DarkModeIcon sx={{ color: 'secondary.main' }} />
+                        ) : (
+                            <LightModeIcon sx={{ color: 'secondary.main' }} />
+                        )}
+                    </Button>
 
                     <Box sx={{
                         width: 300,
@@ -83,17 +96,7 @@ const Profile = () => {
                         Logout
                     </Button><br /><br />
 
-                    <Button
-                        variant="outlined"
-                        sx={{ mt: 1, p: 1 }}
-                        onClick={toggleTheme}
-                    >
-                        {theme === "light" ? (
-                            <DarkModeIcon sx={{ color: 'secondary.main' }} />
-                        ) : (
-                            <LightModeIcon sx={{ color: 'secondary.main' }} />
-                        )}
-                    </Button><br />
+                    <NewPassword></NewPassword>
 
                 </Box>
             </Box>

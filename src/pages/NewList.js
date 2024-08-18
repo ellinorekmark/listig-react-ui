@@ -49,7 +49,7 @@ const NewList = () => {
         try {
             const result = await apiCaller.sendPost("list", newList, loginDetails);
             const id = result.listInfo.id;
-            navigate(`/list/${id}`);
+            navigate(`/web/list/${id}`);
 
         } catch (e) {
             setApiFail(true)
