@@ -58,7 +58,6 @@ const ViewList = () => {
     }, [id, loginDetails]);
 
     const updateList = (newList) => {
-        setList(newList);
 
         if (stompClient && stompClient.connected) {
             stompClient.publish({
