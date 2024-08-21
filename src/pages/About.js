@@ -1,7 +1,16 @@
 import React from 'react';
 import Box from "@mui/material/Box";
-import {Accordion, AccordionDetails, AccordionSummary, ImageList, ImageListItem, Typography} from "@mui/material";
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    ImageList,
+    ImageListItem,
+    ListItem,
+    Typography
+} from "@mui/material";
 import PageHeader from "../components/PageHeader";
+import List from "@mui/material/List";
 
 
 const About = () => {
@@ -18,11 +27,18 @@ const About = () => {
                     <br/>
                     <Typography>
                         Listig is a hobby project by Ellinor Ekmark started Spring 2024. <br/><br/>
-                        Users can create different type of lists, and share lists amongst themselves.
-                        Add a user to your list to both be able to edit and update it, or add a viewer to just let them
-                        see but not touch anything.
+                        Users can create different type of lists, and share lists amongst themselves or to others.
+                        Add a user to your list to both be able to edit and update it, add a viewer to just let them
+                        see but not touch anything, or make your list public so you can share it with anyone.
+                        <br /><br/>
+                        There are currently three types of lists:<br />
+                        <strong>Basic</strong> lists for all your no-frills list needs.<br />
+                        <strong>Check</strong> lists for when getting stuff done. <br />
+                        <strong>Linked</strong> lists, for gathering all your useful links.
+
 
                     </Typography>
+                    <br />
 
                     <Accordion>
                         <AccordionSummary>
@@ -87,18 +103,19 @@ const About = () => {
                             </Box>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <ImageList display={'flex'}>
-                                <ImageListItem minWidth={"300px"} maxWidth={"500px"}>
+                            <ImageList sx={{ display: 'flex',
+                                flexWrap: 'wrap', }}>
+                                <ImageListItem sx={{minWidth:"150px", maxWidth:"300px", padding:1}}>
                                     <img src="/screenshot1.jpg" alt="Lists overview page"/>
                                 </ImageListItem>
-                                <ImageListItem>
+                                <ImageListItem sx={{minWidth:"150px", maxWidth:"300px", padding:1}}>
                                     <img src="/screenshot2.jpg" alt="New list page"/>
                                 </ImageListItem>
-                                <ImageListItem>
-                                <img src="/screenshot3.jpg" alt="Manage users on list"/>
+                                <ImageListItem sx={{minWidth:"150px", maxWidth:"300px", padding:1}}>
+                                <img src="/screenshot3.jpg" alt="List view page with menu options"/>
                             </ImageListItem>
-                                <ImageListItem>
-                                    <img src="/screenshot4.jpg" alt="Lessons learned"/>
+                                <ImageListItem sx={{minWidth:"150px", maxWidth:"300px", padding:1}}>
+                                    <img src="/screenshot4.jpg" alt="List view"/>
                                 </ImageListItem>
                             </ImageList>
 

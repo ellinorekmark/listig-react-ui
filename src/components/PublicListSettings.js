@@ -27,8 +27,7 @@ const PublicListSettings = ({uList, updateList}) => {
     function createURL() {
         if (uList.listInfo.uuid !== null) {
             setAddress(BASE_URL_PUBLIC + uList.listInfo.uuid)
-        }
-        else{
+        } else {
             return ""
         }
     }
@@ -55,43 +54,41 @@ const PublicListSettings = ({uList, updateList}) => {
     return (
         <>
             <Box
-                display="flex"
-                flexDirection="column"
-                justifyContent="center"
-                alignItems="center"
-                height="100%"
+                sx={{maxWidth: 300}}
             >
-            {isPublic ? (
-                <>
-                    <Typography>List is <strong>Public</strong></Typography>
-                    <br />
-                    <Typography>Share the link with anyone to let them view your list.</Typography>
-                    <br />
-                    <Button sx={{m:1}} variant="outlined" fullWidth onClick={copyToClipboard}>
-                        {copied ? "Link Copied!" : "Copy Link"}
-                    </Button>
-                    <Button sx={{m:1}} variant="outlined" fullWidth onClick={goToPublic}>
-                        Go to Public List
-                    </Button>
+                {isPublic ? (
+                    <>
+                        <Typography>List is <strong>Public</strong></Typography>
+                        <br/>
+                        <Typography>Share the link with anyone to let them view your list.</Typography>
+                        <br/>
+                        <Button sx={{m: 1}} variant="outlined" fullWidth onClick={copyToClipboard}>
+                            {copied ? "Link Copied!" : "Copy Link"}
+                        </Button>
+                        <Button sx={{m: 1}} variant="outlined" fullWidth onClick={goToPublic}>
+                            Go to Public List
+                        </Button>
 
 
-                    {loading ? (<CircularProgress></CircularProgress>):(<Button sx={{m:1}} variant="outlined" fullWidth onClick={makePrivate}>
-                        Make private
-                    </Button>) }
-                </>
-            ) : (
-                <>
-                    <Typography>List is <strong>Private</strong>
-                    <br /> Only you and those you invite are able to access the list.</Typography><br />
-                    {loading ? (<CircularProgress></CircularProgress>):(<Button sx={{m:1}} variant="outlined" fullWidth onClick={makePublic}>
-                    Make public
-                </Button>)}<br />
-                    <Typography>Make the list public to be able to share your list with anyone who has the link to
-                        it.</Typography>
+                        {loading ? (<CircularProgress></CircularProgress>) : (
+                            <Button sx={{m: 1}} variant="outlined" fullWidth onClick={makePrivate}>
+                                Make private
+                            </Button>)}
+                    </>
+                ) : (
+                    <>
+                        <Typography>List is <strong>Private</strong>
+                            <br/> Only you and those you invite are able to access the list.</Typography><br/>
+                        {loading ? (<CircularProgress></CircularProgress>) : (
+                            <Button sx={{m: 1}} variant="outlined" fullWidth onClick={makePublic}>
+                                Make public
+                            </Button>)}<br/>
+                        <Typography>Make the list public to be able to share your list with anyone who has the link to
+                            it.</Typography>
 
 
-                </>
-            )}
+                    </>
+                )}
             </Box>
         </>
     );

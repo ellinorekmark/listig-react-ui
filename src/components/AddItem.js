@@ -10,7 +10,6 @@ const AddItem = ({uList, updateList}) => {
     const [newItem, setItem] = useState('');
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(false);
-    const [statusMissing, setStatusMissing] = useState(false);
     const textRef = useRef();
 
     useEffect(() => {
@@ -19,15 +18,10 @@ const AddItem = ({uList, updateList}) => {
 
     const handleSubmit = (event) => {
 
-
         event.preventDefault();
-        if (uList.listInfo.type === "LINK" && status === "") {
-            setStatusMissing(true)
-            return;
-        } else {
-            setLoading(true);
-            addOne();
-        }
+        setLoading(true);
+        addOne();
+
 
     };
 
@@ -53,7 +47,6 @@ const AddItem = ({uList, updateList}) => {
 
         setItem('');
         setStatus('');
-        setStatusMissing(false);
         textRef.current.focus();
     };
 
@@ -126,7 +119,6 @@ const AddItem = ({uList, updateList}) => {
                     </Button>)}
 
                 </Box>
-                {statusMissing && (<Typography color={"warning"}>Please enter a URL for your link</Typography>)}
             </form>
         </>
     );

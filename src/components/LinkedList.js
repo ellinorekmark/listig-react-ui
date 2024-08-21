@@ -25,7 +25,10 @@ const LinkedList = ({uList, updateList}) => {
     const [copied, setCopied] = useState(false)
 
     function openInNewTab(url) {
-        window.open(url, '_blank', 'noopener,noreferrer');
+        if (url !== "") {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
     }
 
     function openSettings(item) {
@@ -33,16 +36,18 @@ const LinkedList = ({uList, updateList}) => {
         setSelectedURL(item.itemStatus)
         setDialog(true)
     }
-    function saveAndClose(){
+
+    function saveAndClose() {
         const updatedItems = uList.items.map((item) =>
             item.id === selected.id
-                ? { ...item, itemStatus: selectedURL }
+                ? {...item, itemStatus: selectedURL}
                 : item
         );
-        updateList({ ...uList, items: updatedItems });
+        updateList({...uList, items: updatedItems});
         setDialog(false);
     }
-    const closeDialog = () =>{
+
+    const closeDialog = () => {
         setDialog(false)
     }
 
@@ -73,7 +78,7 @@ const LinkedList = ({uList, updateList}) => {
                         }}
                     >
                         <ListItemAvatar onClick={() => openInNewTab(item.itemStatus)}>
-                            <OpenInNewIcon></OpenInNewIcon>
+                            {item.itemStatus !== "" && <OpenInNewIcon></OpenInNewIcon>}
                         </ListItemAvatar>
                         <ListItemText
                             primary={item.item}
@@ -95,28 +100,37 @@ const LinkedList = ({uList, updateList}) => {
                 <DialogTitle textAlign={'center'}>
                     Edit link
                 </DialogTitle>
-                <br />
+                <br/>
+                {selectedURL !== "" &&
                 <Button variant="outlined" fullWidth onClick={copyToClipboard}>
                     {copied ? "Link Copied!" : "Copy Link"}
-                </Button>               <DialogContent>
-                {editRights ? (<TextField label="Edit Link"
-                                          value={selectedURL}
-                                          onChange={(e) => setSelectedURL(e.target.value)}
-                ></TextField>) : (
-                    <TextField label="Link"
-                               value={selectedURL}
-                    ></TextField>
-                )}
+                </Button>
+            }
+                <DialogContent>
+
+
+                    {editRights ? (<TextField label="Edit Link"
+                                              value={selectedURL}
+                                              onChange={(e) => setSelectedURL(e.target.value)}
+                    ></TextField>) : (
+                        <TextField label="Link"
+                                   value={selectedURL}
+                        ></TextField>
+                    )}
 
 
                 </DialogContent>
                 <DialogActions sx={{justifyContent: 'center'}}>
 
 
-                    <Button onClick={() => {setDialog(false)}} variant="contained">
+                    <Button onClick={() => {
+                        setDialog(false)
+                    }} variant="contained">
                         Close
                     </Button>
-                    {editRights && (<Button onClick={() => {saveAndClose()}} variant="contained">
+                    {editRights && (<Button onClick={() => {
+                        saveAndClose()
+                    }} variant="contained">
                         Save
                     </Button>)}
 

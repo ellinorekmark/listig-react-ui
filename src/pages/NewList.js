@@ -57,6 +57,16 @@ const NewList = () => {
         }
     }
 
+    const  getListDescription = () => {
+        switch(listType){
+            case "BASIC":
+                return "Normal, no-frills list."
+            case "CHECK":
+                return "To do list, for accomplishing tasks."
+            case "LINK":
+                return "Linked lists, add URL links to all your items."
+        }
+    };
     return (
         <>
             <Box maxWidth={750} sx={{mx: 'auto'}} variant="contained">
@@ -109,7 +119,8 @@ const NewList = () => {
                                 <MenuItem value={"LINK"}>Linked</MenuItem>
 
                             </Select>
-                        </FormControl>
+                        </FormControl><br />
+                        {getListDescription()}
 
                         {loading ? (
                             <Box sx={{display: 'flex', justifyContent: 'center', mt: 4}}>
