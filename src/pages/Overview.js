@@ -7,19 +7,29 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import ListAltIcon from '@mui/icons-material/ListAltTwoTone';
 import PersonIcon from '@mui/icons-material/Person';
-import {Typography, CircularProgress, ToggleButtonGroup, ToggleButton, Icon} from '@mui/material';
+import {
+    Typography,
+    CircularProgress,
+    ToggleButtonGroup,
+    ToggleButton,
+    Icon,
+    Accordion,
+    AccordionDetails, AccordionSummary, Button
+} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheckTwoTone';
 import PageHeader from "../components/PageHeader";
+
 const apiCaller = new ApiCaller();
 
-export default function InteractiveList() {
+export default function Overview() {
     const {loginDetails, user} = useContext(AuthContext);
     const [overviewData, setOverviewData] = useState([]);
     const [activeFiltered, setFilteredList] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [publicLists, setPublicLists] = useState([]);
 
     const navigate = useNavigate();
     const [alignment, setAlignment] = React.useState('all');
@@ -46,11 +56,25 @@ export default function InteractiveList() {
                 setLoading(false);
             }
         };
+
         fetchData();
+
     }, [loginDetails]);
+    useEffect(() => {
+        const findPublicLists = () => {
+            const owned = overviewData.filter(l => ownsList(l))
+            const lists = (owned.filter(l => l.uuid !== null));
+            setPublicLists(lists)
+        }
+        findPublicLists();
+    }, [overviewData])
 
     function goToList(id) {
         navigate(`/web/list/${id}`);
+    }
+
+    function goToPublicView(uuid) {
+        navigate(`/web/public/${uuid}`);
     }
 
     function filterList(option) {
@@ -88,14 +112,15 @@ export default function InteractiveList() {
         }
     }
 
-    function ownsList(l){
+    function ownsList(l) {
         return l.owner === user.username;
     }
+
     return (
         <>
-            <Box maxWidth={750} sx={{ mx: 'auto' }}>
+            <Box maxWidth={750} sx={{mx: 'auto'}}>
                 <PageHeader title={"Lists"}></PageHeader>
-                <Box sx={{ paddingBottom: 2 }}>
+                <Box sx={{paddingBottom: 2}}>
                     <ToggleButtonGroup
                         color="primary"
                         value={alignment}
@@ -110,8 +135,8 @@ export default function InteractiveList() {
                 </Box>
 
                 {loading && (
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                        <CircularProgress />
+                    <Box sx={{display: 'flex', justifyContent: 'center', mt: 4}}>
+                        <CircularProgress/>
                     </Box>
                 )}
 
@@ -144,18 +169,74 @@ export default function InteractiveList() {
                                     primary={list.name}
                                     secondary={list.desc}
                                 />
-                                {!ownsList(list)? (
-                                    <Box sx={{  color: 'primary.lighter', display: 'flex', flexDirection: 'column', alignItems: 'center',}}>
-                                        <PersonIcon />
-                                        <Typography >{list.owner}</Typography>
+                                {!ownsList(list) ? (
+                                    <Box sx={{
+                                        color: 'primary.lighter',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}>
+                                        <PersonIcon/>
+                                        <Typography>{list.owner}</Typography>
                                     </Box>
-                                ): (
+                                ) : (
                                     <Box><Icon></Icon></Box>
                                 )}
 
                             </ListItem>
                         ))}
                     </List>
+                )}
+                {publicLists.length > 0 && (
+                    <>
+                        <Accordion sx={{
+                            border: '1px solid ',
+                            borderColor: 'primary.darker',
+                            marginTop: '5px',
+                            borderRadius: '5px',
+                        }}>
+                            <AccordionSummary>
+                                <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
+                                    <Typography >My Public Lists</Typography>
+                                </Box>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <List dense>
+                                    {publicLists.map((list) => (
+                                        <ListItem
+                                            key={list.id}
+                                            sx={{
+                                                cursor: 'pointer',
+                                                border: '1px solid ',
+                                                borderColor: 'primary.darker',
+                                                marginTop: '5px',
+                                                borderRadius: '5px',
+                                            }}
+                                        >
+                                            <ListItemText
+                                                primary={list.name}
+                                            />
+                                            <Button
+                                                variant={"outlined"}
+                                                onClick={() => goToList(list.id)}
+                                                aria-label="Open list in Edit mode"
+                                                size="small"
+                                            >
+                                                Edit</Button>
+                                            <Button
+                                                variant={"outlined"}
+                                                onClick={() => goToPublicView(list.uuid)}
+                                                aria-label="Open list in Public mode"
+                                                size="small"
+                                            >
+                                                view
+                                            </Button>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                            </AccordionDetails>
+                        </Accordion>
+                    </>
                 )}
             </Box>
         </>

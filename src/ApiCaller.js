@@ -54,6 +54,18 @@ export class ApiCaller {
         }
         return await response.json();
     }
+    async sendGetNoAuth(path) {
+        const response = await fetch(this.baseUrl + path, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        if (!response.ok) {
+            throw new Error(await response.json())
+        }
+        return await response.json();
+    }
 
     async sendDelete(path, data, loginDetails) {
         const response = await fetch(this.baseUrl + path, {

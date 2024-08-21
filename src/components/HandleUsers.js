@@ -91,18 +91,6 @@ const HandleUsers = ({list, updateCopy}) => {
 
     return (
         <>
-            <Accordion>
-                <AccordionSummary
-                    id="panel-header"
-                    aria-controls="panel-content"
-                    sx={{backgroundColor: "primary.main"}}
-                >
-                    <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-                        <Typography p={1} fontSize={"large"}>Users</Typography>
-                    </Box>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <br/>
                     {editors.length > 0 || viewers.length > 0 ? (
                         <>
                             {editors.map((user, index) => (
@@ -142,22 +130,21 @@ const HandleUsers = ({list, updateCopy}) => {
                         </>
                     ) : (
                         <Typography sx={{marginLeft: 2}}>
-                            No users, only you have access to this list.
+                            List is currently private.
                         </Typography>
                     )}
-                </AccordionDetails>
-            </Accordion>
+<br />
             <Accordion>
                 <AccordionSummary
                     id="panel-header"
                     aria-controls="panel-content"
-                    sx={{backgroundColor: "primary.main"}}
+
                 >
                     <Box sx={{width: '100%', display: 'flex', justifyContent: 'center'}}>
-                        <Typography p={1} fontSize={"large"}>Add User</Typography>
+                        <Typography fontSize={"large"}>Add User</Typography>
                     </Box>
                 </AccordionSummary>
-                <AccordionDetails sx={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <AccordionDetails>
                     <FormControl sx={{maxWidth: 350, marginBottom: 2}}>
                         <TextField
                             inputProps={{maxLength: 50}}
@@ -191,11 +178,12 @@ const HandleUsers = ({list, updateCopy}) => {
                                 Add User
                             </Button>
                         )}
+
                     </Box>
                     <br/>
                     <Typography color={"error"}> {errorMessage}</Typography>
-                </AccordionDetails>
-            </Accordion>
+</AccordionDetails>
+</Accordion>
         </>
     );
 };

@@ -5,15 +5,15 @@ import {
 import Typography from "@mui/material/Typography";
 import LockIcon from "@mui/icons-material/Lock";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
-import EditDialog from "./EditDialog";
 import CheckListDisplay from "./CheckListDisplay";
 import BasicList from "./BasicList";
 import GroupIcon from "@mui/icons-material/Group";
 import {AuthContext} from "../AuthContext";
 import EditItems from "./EditItems";
 import AddItem from "./AddItem";
-import ViewerOptions from "./ViewerOptions";
 import PageHeader from "./PageHeader";
+import ListOptions from "./ListOptions";
+import ListDesc from "./ListDesc";
 
 
 const ListDisplay = ({uList, updateList}) => {
@@ -38,7 +38,7 @@ const ListDisplay = ({uList, updateList}) => {
 
     const users = () => {
         if (uList.owner === user.username && uList.editors.length === 0 && uList.viewers.length === 0) {
-            return <br/>
+            return <></>
         } else {
             const editorsAndViewers = [...uList.editors, ...uList.viewers].join(", ");
             const allUsers = uList.owner + ", " + editorsAndViewers
@@ -52,50 +52,46 @@ const ListDisplay = ({uList, updateList}) => {
         }
     }
 
+
     return (
         <>
             <Box maxWidth={750} sx={{mx: 'auto'}} variant="contained">
 
 
                 <Box>
+
                     <PageHeader title={uList.listInfo.listName}></PageHeader>
-                    <Box sx={{
-                        display: 'grid', border: '1px solid ',
-                        borderColor: 'primary.darker', borderRadius: 2, m: 2
-                    }}>
-                        <Box sx={{marginBottom: 2, gridRow: '1', gridColumn: "1 / 2", m: 1}}>
-                            <Typography fontSize={"large"} sx={{fontFamily: 'Garamond', textAlign: 'left'}}>
-                                {uList.listInfo.listDesc}
-                                <br/>
-                            </Typography>
-                        </Box>
-                        <Box sx={{gridRow: '1', gridColumn: '3'}}>
 
+                    <ListDesc uList={uList}></ListDesc>
 
-                            {editRights ? (
-                                <>
-                                    <EditDialog uList={uList} updateList={updateList}></EditDialog>
-                                    <IconButton variant="outlined" onClick={toggleLocked}>
-                                        {locked ? <LockIcon sx={{color: 'secondary.main'}}/> :
-                                            <LockOpenIcon sx={{color: 'secondary.main'}}/>}
-                                    </IconButton>
-                                </>
-                            ) : (
-                                <ViewerOptions uList={uList}></ViewerOptions>)}
+                    <Typography sx={{gridRow: '2', gridColumn: '1 / 3', textAlign: 'left', p: 1}}>
+                        {users()}
+                    </Typography>
 
-                        </Box>
-                        <Typography sx={{gridRow: '2', gridColumn: '1 / 3', textAlign: 'left', p: 1}}>
-                            {users()}
-                        </Typography>
-                    </Box>
                 </Box>
-                {locked ? (
-                    <Box>{getListType(uList)}</Box>
-                ) : (
-                    <EditItems uList={uList} updateList={updateList}/>
-                )}
+                <Box sx={{
+                    border: '1px solid ',
+                    borderColor: 'primary.darker'
+                }}>
+                    <Box sx={{backgroundColor: "primary.darker", display: 'flex', justifyContent: 'flex-end',}}>
+                        {editRights && (
+                            <IconButton variant="outlined" onClick={toggleLocked}>
+                                {locked ? <LockIcon sx={{color: 'primary.lighter'}}/> :
+                                    <LockOpenIcon sx={{color: 'primary.lighter'}}/>}
+                            </IconButton>
+                        )}
+                        <ListOptions uList={uList} updateList={updateList}></ListOptions>
+                    </Box>
 
-                {editRights && (<AddItem uList={uList} updateList={updateList}></AddItem>)}
+
+                    {locked ? (
+                        <Box>{getListType(uList)}</Box>
+                    ) : (
+                        <EditItems uList={uList} updateList={updateList}/>
+                    )}
+
+                    {editRights && (<AddItem uList={uList} updateList={updateList}></AddItem>)}
+                </Box>
             </Box>
         </>
     );

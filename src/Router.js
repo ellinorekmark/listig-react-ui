@@ -9,6 +9,7 @@ const ListView = lazy(() => import('./pages/ViewList'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Admin = lazy(() => import('./pages/Admin'))
 const About = lazy(() => import('./pages/About'))
+const Public = lazy(() => import('./pages/PublicListView'))
 
 
 const AppRouter = () => (
@@ -22,6 +23,7 @@ const AppRouter = () => (
         <Route path="/web/profile" element={<Profile/>} />
         <Route path="/web/about" element={<About/>} />
         <Route path="/web/admin" element={<Admin/>} />
+        <Route path="/web/public/:uuid" element={<Public/>} />
         <Route path="*" element={() => <div>404 Not Found</div>} />
       </Routes>
     </Suspense>

@@ -18,6 +18,7 @@ import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
 import {useNavigate} from "react-router-dom";
 import PageHeader from "./PageHeader";
+import PublicListSettings from "./PublicListSettings";
 
 const apiCaller = new ApiCaller()
 const EditDialog = ({uList, updateList}) => {
@@ -61,7 +62,6 @@ const EditDialog = ({uList, updateList}) => {
         deletedUsers.forEach(user => {
             apiCaller.sendPost("list/removeUser", {user: user, listId: uList.listInfo.id}, loginDetails)
         });
-        console.log("This is the updated, copy:", JSON.stringify(listCopy))
         updateList(listCopy)
         setDialog(false);
     }
@@ -106,7 +106,8 @@ const EditDialog = ({uList, updateList}) => {
                     }} variant="contained">
 
                         <EditListDetails list={listCopy} updateCopy={updateCopy}></EditListDetails>
-                        {isOwner ? (
+                        {isOwner ? (<>
+                                <PublicListSettings uList={uList} updateList={updateList}></PublicListSettings>
                             <Accordion>
                                 <AccordionSummary id="panel-header" aria-controls="panel-content"
                                                   sx={{backgroundColor: "primary.main"}} >
@@ -120,7 +121,7 @@ const EditDialog = ({uList, updateList}) => {
                                     <Button onClick={deleteList} variant={"contained"} sx={{padding: 2}}
                                             color={"warning"} fullWidth >Delete list</Button>
                                 </AccordionDetails>
-                            </Accordion>
+                            </Accordion></>
                         ): (
                             <Accordion>
                                 <AccordionSummary id="panel-header" aria-controls="panel-content"
