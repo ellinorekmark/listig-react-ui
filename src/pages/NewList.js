@@ -106,6 +106,7 @@ const NewList = () => {
                             >
                                 <MenuItem value={"BASIC"}>Normal</MenuItem>
                                 <MenuItem value={"CHECK"}>Checklist</MenuItem>
+                                <MenuItem value={"LINK"}>Linked</MenuItem>
 
                             </Select>
                         </FormControl>

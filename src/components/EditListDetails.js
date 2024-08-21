@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {
     FormControl, MenuItem, Select, TextField, Typography
 } from "@mui/material";
@@ -18,9 +18,11 @@ const EditListDetails = ({list, updateCopy}) => {
             listInfo: {
                 ...list.listInfo,
                 type: event.target.value,
+
             },
         };
         updateCopy(newList);
+
     };
 
     const updateTitle = (value) => {
@@ -70,6 +72,9 @@ const EditListDetails = ({list, updateCopy}) => {
             />
             <FormControl>
                 <Typography>List type:</Typography>
+                {list.listInfo.type==="LINK" ? (
+                    <Typography>Linked</Typography>
+                ):(
                 <Select
                     value={list.listInfo.type}
                     onChange={handleTypeChange}
@@ -80,7 +85,7 @@ const EditListDetails = ({list, updateCopy}) => {
                 >
                     <MenuItem value={"BASIC"}>Normal</MenuItem>
                     <MenuItem value={"CHECK"}>Checklist</MenuItem>
-                </Select>
+                </Select>)}
             </FormControl>
         </>
     );

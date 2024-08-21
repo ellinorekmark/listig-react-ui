@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {Box, Button, Typography} from "@mui/material";
+import {Box, Button, CircularProgress, Typography} from "@mui/material";
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
 import {BASE_URL_PUBLIC} from "../constants";
@@ -11,6 +11,7 @@ const PublicListSettings = ({uList, updateList}) => {
     const [isPublic, setPublic] = useState(false);
     const [address, setAddress] = useState("");
     const [copied, setCopied] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const copyToClipboard = async () => {
@@ -35,13 +36,16 @@ const PublicListSettings = ({uList, updateList}) => {
     useEffect(() => {
         setPublic(uList.listInfo.uuid !== null)
         createURL();
+        setLoading(false)
     }, [uList]);
 
     const makePublic = async () => {
+        setLoading(true)
         const updated = await api.sendPost("list/makePublic", uList, loginDetails)
         updateList(updated)
     }
     const makePrivate = async () => {
+        setLoading(true)
         const updated = await api.sendPost("list/makePrivate", uList, loginDetails)
         updateList(updated)
     }
@@ -71,17 +75,17 @@ const PublicListSettings = ({uList, updateList}) => {
                     </Button>
 
 
-                    <Button sx={{m:1}} variant="outlined" fullWidth onClick={makePrivate}>
+                    {loading ? (<CircularProgress></CircularProgress>):(<Button sx={{m:1}} variant="outlined" fullWidth onClick={makePrivate}>
                         Make private
-                    </Button>
+                    </Button>) }
                 </>
             ) : (
                 <>
                     <Typography>List is <strong>Private</strong>
                     <br /> Only you and those you invite are able to access the list.</Typography><br />
-                    <Button sx={{m:1}} variant="outlined" fullWidth onClick={makePublic}>
+                    {loading ? (<CircularProgress></CircularProgress>):(<Button sx={{m:1}} variant="outlined" fullWidth onClick={makePublic}>
                     Make public
-                </Button><br />
+                </Button>)}<br />
                     <Typography>Make the list public to be able to share your list with anyone who has the link to
                         it.</Typography>
 

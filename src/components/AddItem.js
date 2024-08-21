@@ -1,29 +1,42 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     Box,
-    Button,
-    TextField,
+    Button, CircularProgress,
+    TextField, Typography,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-const AddItem = ({ uList, updateList }) => {
+const AddItem = ({uList, updateList}) => {
     const [newItem, setItem] = useState('');
+    const [status, setStatus] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [statusMissing, setStatusMissing] = useState(false);
     const textRef = useRef();
 
     useEffect(() => {
-
-    }, []);
+        setLoading(false);
+    }, [uList]);
 
     const handleSubmit = (event) => {
+
+
         event.preventDefault();
-        addOne();
+        if (uList.listInfo.type === "LINK" && status === "") {
+            setStatusMissing(true)
+            return;
+        } else {
+            setLoading(true);
+            addOne();
+        }
+
     };
 
     function addToList(i, updatedList) {
         const newItemObj = {
             listId: uList.listInfo.id,
             item: i,
-            itemOrder: updatedList.items.length + 1
+            itemOrder: updatedList.items.length + 1,
+            itemStatus: status
         };
 
         return {
@@ -39,6 +52,8 @@ const AddItem = ({ uList, updateList }) => {
         updateList(updatedList);
 
         setItem('');
+        setStatus('');
+        setStatusMissing(false);
         textRef.current.focus();
     };
 
@@ -46,43 +61,72 @@ const AddItem = ({ uList, updateList }) => {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
-                    <TextField
-                        inputProps={{ maxLength: 200 }}
-                        id="new-item"
-                        label="Add to List"
-                        variant="outlined"
-                        value={newItem}
-                        onChange={(e) => setItem(e.target.value)}
-                        fullWidth
-                        sx={{ height: '56px', }}
-                        inputRef={textRef}
-                        InputProps={{
-                            sx: {
-                                borderTopRightRadius: 0,
-                                borderBottomRightRadius: 0,
-                                '& .MuiOutlinedInput-notchedOutline': {
+                <Box sx={{display: 'flex', alignItems: 'center', mt: 2}}>
+                    <Box sx={{flex: 1, display: 'flex', flexDirection: 'column'}}>
+                        <TextField
+                            inputProps={{maxLength: 200}}
+                            id="new-item"
+                            label="Add to List"
+                            variant="outlined"
+                            value={newItem}
+                            onChange={(e) => setItem(e.target.value)}
+                            fullWidth
+                            sx={{height: '56px',}}
+                            inputRef={textRef}
+                            InputProps={{
+                                sx: {
                                     borderTopRightRadius: 0,
                                     borderBottomRightRadius: 0,
+                                    '& .MuiOutlinedInput-notchedOutline': {
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                    },
+                                    height: '56px',
+                                    borderColor: 'primary.darker',
                                 },
-                                height: '56px',
-                                borderColor: 'primary.darker',
-                            },
-                        }}
-                    />
-                    <Button
+                            }}
+                        />
+                        {uList.listInfo.type === "LINK" && (
+                            <TextField
+                                inputProps={{maxLength: 200}}
+                                id="new-item"
+                                label="URL"
+                                variant="outlined"
+                                value={status}
+                                onChange={(e) => setStatus(e.target.value)}
+                                fullWidth
+                                sx={{height: '56px',}}
+                                inputRef={textRef}
+                                InputProps={{
+                                    sx: {
+                                        borderTopRightRadius: 0,
+                                        borderBottomRightRadius: 0,
+                                        '& .MuiOutlinedInput-notchedOutline': {
+                                            borderTopRightRadius: 0,
+                                            borderBottomRightRadius: 0,
+                                        },
+                                        height: '56px',
+                                        borderColor: 'primary.darker',
+                                    },
+                                }}
+                            />
+                        )}
+                    </Box>
+                    {loading ? (<CircularProgress></CircularProgress>) : (<Button
                         type={"submit"}
                         variant="outlined"
                         sx={{
                             borderTopLeftRadius: 0,
                             borderBottomLeftRadius: 0,
-                            height: '56px',
                             minWidth: '56px',
+                            height: uList.listInfo.type === 'LINK' ? '112px' : '56px'
                         }}
                     >
-                        <AddIcon />
-                    </Button>
+                        <AddIcon/>
+                    </Button>)}
+
                 </Box>
+                {statusMissing && (<Typography color={"warning"}>Please enter a URL for your link</Typography>)}
             </form>
         </>
     );

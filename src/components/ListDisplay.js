@@ -14,6 +14,7 @@ import AddItem from "./AddItem";
 import PageHeader from "./PageHeader";
 import ListOptions from "./ListOptions";
 import ListDesc from "./ListDesc";
+import LinkedList from "./LinkedList";
 
 
 const ListDisplay = ({uList, updateList}) => {
@@ -31,6 +32,8 @@ const ListDisplay = ({uList, updateList}) => {
         switch (type.listInfo.type) {
             case 'CHECK':
                 return <CheckListDisplay uList={uList} updateList={updateList}/>;
+            case "LINK":
+                return <LinkedList uList={uList} updateList={updateList}></LinkedList>;
             default:
                 return <BasicList uList={uList}/>;
         }

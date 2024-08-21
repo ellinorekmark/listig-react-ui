@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -10,13 +10,17 @@ import ClearIcon from '@mui/icons-material/Clear';
 import IconButton from '@mui/material/IconButton';
 import {ApiCaller} from "../ApiCaller";
 import {AuthContext} from "../AuthContext";
+import {CircularProgress} from "@mui/material";
 
 const api = new ApiCaller()
 
 const EditItems = ({uList, updateList}) => {
     const {loginDetails} = useContext(AuthContext);
+    const [loading, setLoading] = useState("");
 
-
+    useEffect(() => {
+        setLoading('');
+    }, [uList]);
     const handleDragEnd = (result) => {
         if (!result.destination) return;
 
@@ -34,6 +38,7 @@ const EditItems = ({uList, updateList}) => {
 
 
     const removeItem = async (item) => {
+        setLoading(item)
         const updated = await api.sendDelete("list/item", item, loginDetails)
 
         updateList(updated);
@@ -79,10 +84,10 @@ const EditItems = ({uList, updateList}) => {
                                                 </ListItemAvatar>
                                                 <ListItemText primary={item.item}
                                                               primaryTypographyProps={{fontSize: '18px'}}/>
-                                                <IconButton edge="end" aria-label="delete"
-                                                            onClick={() => removeItem(item)}>
+                                                {loading === item ? (<CircularProgress></CircularProgress>) : (<IconButton edge="end" aria-label="delete"
+                                                                                                                  onClick={() => removeItem(item)}>
                                                     <ClearIcon/>
-                                                </IconButton>
+                                                </IconButton>) }
                                             </ListItem>
                                         )}
                                     </Draggable>
