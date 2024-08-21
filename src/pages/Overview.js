@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import ListAltIcon from '@mui/icons-material/ListAltTwoTone';
 import PersonIcon from '@mui/icons-material/Person';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
     Typography,
     CircularProgress,
@@ -107,6 +108,8 @@ export default function Overview() {
         switch (type) {
             case 'CHECK':
                 return <LibraryAddCheckIcon sx={{color: "primary.darker"}}/>;
+            case 'LINK':
+                return <OpenInNewIcon sx={{color: "primary.darker"}}/>
             default:
                 return <ListAltIcon sx={{color: "primary.darker"}}/>;
         }
