@@ -33,11 +33,15 @@ export default function Overview() {
     const [publicLists, setPublicLists] = useState([]);
 
     const navigate = useNavigate();
-    const [alignment, setAlignment] = React.useState('all');
+    const [alignment, setAlignment] = useState(localStorage.getItem("overviewAlignment"));
 
     const handleChange = (event, newAlignment) => {
-        setAlignment(newAlignment);
-        filterList(newAlignment);
+        if(newAlignment!== null){
+            localStorage.setItem("overviewAlignment", newAlignment)
+            setAlignment(newAlignment);
+            filterList(newAlignment);
+        }
+
     };
 
     const sortListByLastEdit = (data) => {
@@ -50,9 +54,8 @@ export default function Overview() {
                 const data = await apiCaller.sendGet("list/all", loginDetails);
                 const sortedData = sortListByLastEdit(data);
                 setOverviewData(sortedData);
-                setFilteredList(sortedData);
             } catch (error) {
-                console.error("Error fetching data", error);
+                console.error("Error fetching data",error);
             } finally {
                 setLoading(false);
             }
@@ -61,6 +64,7 @@ export default function Overview() {
         fetchData();
 
     }, [loginDetails]);
+
     useEffect(() => {
         const findPublicLists = () => {
             const owned = overviewData.filter(l => ownsList(l))
@@ -69,7 +73,11 @@ export default function Overview() {
         }
         findPublicLists();
     }, [overviewData])
-
+    useEffect(() => {
+        if (overviewData.length > 0) {
+            filterList(alignment);
+        }
+    }, [overviewData, alignment]);
     function goToList(id) {
         navigate(`/web/list/${id}`);
     }
