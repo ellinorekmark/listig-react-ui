@@ -31,9 +31,9 @@ const ListDisplay = ({uList, updateList}) => {
     function getListType(type) {
         switch (type.listInfo.type) {
             case 'CHECK':
-                return <CheckListDisplay uList={uList} updateList={updateList}/>;
+                return <CheckListDisplay uList={uList} updateList={updateList} isPublic={false}/>;
             case "LINK":
-                return <LinkedList uList={uList} updateList={updateList}></LinkedList>;
+                return <LinkedList uList={uList} updateList={updateList} isPublic={false}></LinkedList>;
             default:
                 return <BasicList uList={uList}/>;
         }

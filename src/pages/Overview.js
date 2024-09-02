@@ -83,7 +83,8 @@ export default function Overview() {
     }
 
     function goToPublicView(uuid) {
-        navigate(`/web/public/${uuid}`);
+        window.open(`/web/public/${uuid}`, '_blank', 'noopener,noreferrer');
+        //navigate(`/web/public/${uuid}`);
     }
 
     function filterList(option) {

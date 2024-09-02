@@ -13,10 +13,15 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import {AuthContext} from "../AuthContext";
 
-const CheckListDisplay = ({ uList, updateList }) => {
+const CheckListDisplay = ({ uList, updateList, isPublic }) => {
     const {user} = useContext(AuthContext);
     const [editRights, setEditRights] = useState(() => {
-        return user.username === uList.owner || uList.editors.includes(user.username);
+        if(isPublic){
+            return false
+        }
+        else {
+            return user.username === uList.owner || uList.editors.includes(user.username);
+        }
     });
 
     function getCheckStatus(status) {

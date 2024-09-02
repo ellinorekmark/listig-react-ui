@@ -7,6 +7,7 @@ import PageHeader from "../components/PageHeader";
 import ListDesc from "../components/ListDesc";
 import CheckListDisplay from "../components/CheckListDisplay";
 import BasicList from "../components/BasicList";
+import LinkedList from "../components/LinkedList";
 
 const apiCaller = new ApiCaller();
 
@@ -39,7 +40,9 @@ const PublicListView = () => {
     function getListType(type) {
         switch (type.listInfo.type) {
             case 'CHECK':
-                return <CheckListDisplay uList={uList} updateList={updateList}/>;
+                return <CheckListDisplay uList={uList} updateList={updateList} isPublic={true}/>
+            case 'LINK':
+                return <LinkedList uList={uList} updateList={updateList()} isPublic={true}></LinkedList>
             default:
                 return <BasicList uList={uList}/>;
         }

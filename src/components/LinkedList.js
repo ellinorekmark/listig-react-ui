@@ -12,10 +12,16 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import SettingsIcon from '@mui/icons-material/Settings';
 import {AuthContext} from "../AuthContext";
 
-const LinkedList = ({uList, updateList}) => {
+const LinkedList = ({uList, updateList, isPublic}) => {
     const {user} = useContext(AuthContext);
     const [editRights, setEditRights] = useState(() => {
-        return user.username === uList.owner || uList.editors.includes(user.username);
+        if(isPublic){
+            return false
+        }
+        else {
+            return user.username === uList.owner || uList.editors.includes(user.username);
+        }
+
     });
 
 
