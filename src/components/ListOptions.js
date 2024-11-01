@@ -28,7 +28,7 @@ const ListOptions = ({ uList, updateList }) => {
 
     const renderMenuItems = () => {
         const commonItems = [
-            { text: 'User Information', action: () => openDialog('userInfo'), roles: ['viewers'] },
+            { text: 'User Information', action: () => openDialog('userInfo'), roles: ['viewers','editors'] },
             { text: 'Bulk Add Items', action: () => openDialog('bulkAdd'), roles: ['owner', 'editors'] },
             { text: 'Edit List Information', action: () => openDialog('editListInfo'), roles: ['owner', 'editors'] },
             { text: 'Go to Public Page', action: () => navigate(`/web/public/${uList.listInfo.uuid}`), roles: ['viewers', 'editors'], condition: isPublic },

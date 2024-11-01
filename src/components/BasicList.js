@@ -33,8 +33,10 @@ const BasicList = ({uList}) => {
                             primary={item.item}
                             primaryTypographyProps={{fontSize: '18px'}}
                         />
-                        <IconButton edge="end">
-                            <Icon></Icon>
+                        <IconButton sx={{
+                            pointerEvents: 'none',
+                        }} edge="end">
+                            <Icon ></Icon>
                         </IconButton>
                     </ListItem>
                 ))}

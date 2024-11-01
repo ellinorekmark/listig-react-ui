@@ -54,6 +54,7 @@ const BulkAdd = ({ uList, updateList }) => {
                     </Typography>
                     <TextField
                         inputProps={{ maxLength: 200 }}
+                        autoComplete="off"
                         id="bulk-add"
                         label="Bulk add"
                         variant="outlined"

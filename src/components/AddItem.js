@@ -59,6 +59,7 @@ const AddItem = ({uList, updateList}) => {
                         <TextField
                             inputProps={{maxLength: 200}}
                             id="new-item"
+                            autoComplete='off'
                             label="Add to List"
                             variant="outlined"
                             value={newItem}

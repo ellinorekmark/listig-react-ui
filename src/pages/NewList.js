@@ -83,6 +83,7 @@ const NewList = () => {
                     }}>
                         <TextField
                             inputProps={{maxLength: 100}}
+                            autoComplete="off"
                             id="list-title"
                             label="Title"
                             variant="outlined"

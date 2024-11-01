@@ -68,7 +68,9 @@ const CheckListDisplay = ({ uList, updateList, isPublic }) => {
                             primary={item.item}
                             primaryTypographyProps={{ fontSize: '18px' }}
                         />
-                        <IconButton edge="end" >
+                        <IconButton sx={{
+                            pointerEvents: 'none',
+                        }} edge="end" >
                             <Icon></Icon>
                         </IconButton>
                     </ListItem>
